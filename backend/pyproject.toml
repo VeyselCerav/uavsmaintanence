@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "uavs-maintenance-backend"
+version = "0.1.0"
+description = "UAV class/platform/mission specific maintenance management API"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+  "Django>=5.2,<5.3",
+  "djangorestframework>=3.15,<3.17",
+  "djangorestframework-simplejwt>=5.4,<6",
+  "django-cors-headers>=4.6,<5",
+  "drf-spectacular>=0.28,<0.29",
+  "psycopg[binary]>=3.2,<4",
+  "pydantic>=2.10,<3",
+  "gunicorn>=23,<24",
+  "python-dotenv>=1.0,<2",
+  "openpyxl>=3.1,<4",
+  "reportlab>=4.2,<5",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3,<9",
+  "pytest-django>=4.9,<5",
+  "ruff>=0.9,<1",
+  "mypy>=1.14,<2",
+  "django-stubs>=5.1,<6",
+  "djangorestframework-stubs>=3.15,<4",
+]
+
+[tool.setuptools.packages.find]
+include = ["config*", "apps*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+extend-exclude = ["**/migrations/*.py"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.mypy]
+python_version = "3.13"
+plugins = ["mypy_django_plugin.main"]
+ignore_missing_imports = true
+
+[tool.django-stubs]
+django_settings_module = "config.settings.development"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings.development"
+python_files = ["test_*.py"]

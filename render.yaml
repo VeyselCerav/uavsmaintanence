@@ -1,0 +1,27 @@
+# Render Blueprint — ücretsiz Django backend
+# PostgreSQL: Neon (https://neon.tech) — DATABASE_URL Render ortam değişkenine yapıştırılır.
+# Frontend: Vercel — ayrı kurulum (docs/CANLI-YAYIN.md)
+
+services:
+  - type: web
+    name: uavs-backend
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /health/
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: config.settings.production
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_ALLOWED_HOSTS
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
+      - key: CSRF_TRUSTED_ORIGINS
+        sync: false
+      - key: SEED_DEMO
+        value: "true"

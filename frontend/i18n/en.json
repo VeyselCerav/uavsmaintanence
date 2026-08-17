@@ -1,0 +1,748 @@
+{
+  "common": {
+    "appName": "UAV Maintenance Management System",
+    "save": "Save",
+    "cancel": "Cancel",
+    "loading": "Loading",
+    "demo": "DEMO",
+    "search": "Search",
+    "create": "Add",
+    "back": "Back",
+    "actions": "Actions",
+    "edit": "Edit",
+    "delete": "Delete",
+    "viewAll": "View all"
+  },
+  "search": {
+    "empty": "No results.",
+    "entity": {
+      "uav": "UAV",
+      "component": "Component",
+      "work_order": "Work order",
+      "maintenance": "Maintenance",
+      "failure": "Failure",
+      "part": "Part"
+    }
+  },
+  "chart": {
+    "fleet": "Fleet status",
+    "dues": "Maintenance dues",
+    "comparison": "Approach comparison"
+  },
+  "auth": {
+    "login": "Sign in",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password",
+    "submit": "Sign in",
+    "logout": "Sign out",
+    "resetHint": "No email is sent. In development a reset link is shown.",
+    "resetSubmit": "Request reset",
+    "resetSent": "If the account exists, a reset is prepared. In this demo the link appears below.",
+    "resetContinue": "Set a new password",
+    "resetPassword": "New password",
+    "resetPasswordHint": "Change the password with the token from the link.",
+    "newPassword": "New password"
+  },
+  "brand": {
+    "university": "Fırat University",
+    "program": "Aviation Science and Technologies",
+    "degree": "Master's Program with Thesis",
+    "student": "Student: Sermet BAYAZİT",
+    "advisor": "Advisor: Dr. Ukbe Usame UÇAR"
+  },
+  "navigation": {
+    "dashboard": "Overview",
+    "fleet": "Fleet",
+    "maintenance": "Maintenance",
+    "workOrders": "Work orders",
+    "flights": "Flights",
+    "failures": "Failures",
+    "fmea": "FMEA",
+    "rcm": "RCM",
+    "parts": "Parts",
+    "documents": "Documents",
+    "reliability": "Reliability",
+    "comparison": "Comparison",
+    "reports": "Reports",
+    "admin": "Control center"
+  },
+  "dashboard": {
+    "title": "Fleet overview",
+    "subtitle": "Due maintenance and open work orders.",
+    "placeholder": "Skeleton stage — operational screens will be added in later phases.",
+    "dues": "Maintenance dues",
+    "workOrders": "Open work orders",
+    "openWorkOrders": "Open work orders",
+    "emptyDues": "No maintenance items need attention.",
+    "emptyWorkOrders": "No open work orders."
+  },
+  "notifications": {
+    "title": "Notifications",
+    "all": "All",
+    "empty": "No notifications.",
+    "markRead": "Mark read",
+    "markAll": "Mark all as read",
+    "titles": {
+      "MAINTENANCE_DUE": "Maintenance is due",
+      "MAINTENANCE_OVERDUE": "Maintenance is overdue",
+      "CRITICAL_COMPONENT": "Critical maintenance threshold",
+      "MAINTENANCE_APPROACHING": "Maintenance approaching",
+      "LOW_STOCK": "Low stock",
+      "WORK_ORDER_ASSIGNED": "Work order assigned",
+      "WORK_ORDER_COMPLETED": "Work order completed"
+    },
+    "bodies": {
+      "MAINTENANCE_DUE": "A maintenance item crossed the due threshold.",
+      "MAINTENANCE_OVERDUE": "A maintenance item crossed the overdue threshold.",
+      "CRITICAL_COMPONENT": "A maintenance item crossed the critical threshold.",
+      "MAINTENANCE_APPROACHING": "A maintenance item entered the approaching band.",
+      "LOW_STOCK": "Part stock is low.",
+      "WORK_ORDER_ASSIGNED": "A work order was assigned to you.",
+      "WORK_ORDER_COMPLETED": "A work order was completed."
+    }
+  },
+  "admin": {
+    "title": "Maintenance Control Center",
+    "overview": "Overview",
+    "overviewSubtitle": "Fleet status, work-order distribution, and overdue tasks.",
+    "workOrderDistribution": "Work order status",
+    "overdueTasks": "Overdue tasks",
+    "emptyOverdue": "No overdue maintenance.",
+    "classes": "UAV classes",
+    "platforms": "Platforms",
+    "missions": "Mission types",
+    "components": "Component types",
+    "templates": "Maintenance templates",
+    "rules": "Maintenance rules",
+    "technicians": "Technicians",
+    "skills": "Skills",
+    "users": "Users",
+    "settings": "Settings",
+    "audit": "Audit log"
+  },
+  "errors": {
+    "generic": "The request could not be completed.",
+    "network": "Could not reach the server. Please try again.",
+    "auth": {
+      "invalid_credentials": "Invalid email or password.",
+      "invalid_refresh": "Session could not be refreshed.",
+      "token_not_valid": "Session is invalid or expired. Please sign in again.",
+      "invalid_current_password": "The current password is incorrect.",
+      "invalid_new_password": "The new password does not meet the requirements.",
+      "invalid_locale": "Locale must be tr, en or az.",
+      "invalid_reset_token": "The reset link is invalid or expired."
+    },
+    "maintenance": {
+      "template_not_found": "No maintenance template exists for this class, platform and mission.",
+      "resolve_params": "Class, platform, mission and approach are required to resolve a template.",
+      "invalid_due_rules": "Due thresholds must be strictly increasing (approaching < due < overdue < critical)."
+    },
+    "flight": {
+      "counters_already_applied": "Counters for this flight were already applied.",
+      "invalid_interval": "End time must be after start time."
+    },
+    "work_order": {
+      "invalid_transition": "This status transition is not allowed.",
+      "already_open": "An open work order already exists for this due item.",
+      "already_completed": "Work order is already completed."
+    },
+    "technician": {
+      "inactive": "Technician is not active.",
+      "profile_exists": "This user already has a technician profile.",
+      "email_taken": "A user with this email already exists.",
+      "skill_code_taken": "A skill with this code already exists.",
+      "skill_exists": "This skill is already assigned to the technician.",
+      "invalid_dates": "Expiry date cannot be before the issue or certification date."
+    },
+    "failure": {
+      "invalid_dates": "Resolved time cannot be before the occurrence time.",
+      "invalid_component": "The selected component does not belong to this UAV.",
+      "invalid_work_order": "The selected work order does not belong to this UAV.",
+      "invalid_downtime": "Downtime hours cannot be negative.",
+      "mode_code_taken": "A failure mode with this code already exists."
+    },
+    "fmea": {
+      "code_taken": "An FMEA with this code already exists.",
+      "locked": "Approved FMEA records cannot be edited.",
+      "already_approved": "FMEA is already approved.",
+      "invalid_scores": "Severity, occurrence and detection must be integers from 1 to 10."
+    },
+    "rcm": {
+      "code_taken": "An RCM analysis with this code already exists.",
+      "locked": "Approved RCM records cannot be edited.",
+      "already_approved": "RCM is already approved.",
+      "rationale_required": "A rationale is required when overriding the decision tree.",
+      "not_approved": "Only an approved RCM can be copied to a template.",
+      "strategy_conflict": "RCM items do not share a single strategy to copy."
+    },
+    "reliability": {
+      "invalid_scope": "Scope must be fleet, class, uav or component.",
+      "invalid_range": "The reliability date range is invalid.",
+      "scope_not_found": "The reliability scope target was not found."
+    },
+    "part": {
+      "number_taken": "A part with this number already exists.",
+      "incompatible": "This part is not compatible with the UAV or component.",
+      "insufficient_stock": "Stock quantity is not enough for this issue.",
+      "invalid_quantity": "Quantity must be greater than zero."
+    },
+    "cost": {
+      "invalid_amount": "Cost amounts cannot be negative."
+    },
+    "document": {
+      "target_required": "A document must be linked to a UAV, component, template or work order.",
+      "file_required": "Upload a file or provide a file name and storage key.",
+      "file_too_large": "The file exceeds the 10 MB limit.",
+      "file_type_invalid": "This file type is not allowed.",
+      "file_missing": "No file is stored for this document.",
+      "storage_key_taken": "This storage key is already in use."
+    },
+    "user": {
+      "email_taken": "A user with this email already exists.",
+      "last_admin": "The last active administrator cannot be removed."
+    },
+    "settings": {
+      "invalid_value": "The setting value is invalid."
+    },
+    "report": {
+      "invalid_type": "Unknown report type.",
+      "uav_required": "This report requires a UAV."
+    },
+    "component": {
+      "type_inactive": "The component type is not active.",
+      "serial_taken": "This serial number is already installed.",
+      "not_installed": "The component is not currently installed.",
+      "open_work_order": "Open work orders must be closed before removal.",
+      "uav_retired": "Components cannot be installed or removed on a retired UAV.",
+      "invalid_dates": "Removal time cannot be before the installation time."
+    }
+  },
+  "uav": {
+    "title": "Fleet",
+    "new": "New UAV",
+    "edit": "Edit UAV",
+    "detail": "UAV detail",
+    "registration": "Registration no",
+    "serial": "Serial no",
+    "manufacturer": "Manufacturer",
+    "model": "Model",
+    "class": "Class",
+    "platform": "Platform",
+    "mission": "Mission type",
+    "approach": "Maintenance approach",
+    "template": "Maintenance template",
+    "status": "Status",
+    "mtow": "MTOW (kg)",
+    "productionDate": "Production date",
+    "inventoryDate": "Inventory entry date",
+    "hours": "Flight hours",
+    "flights": "Flight count",
+    "cycles": "Cycles",
+    "notes": "Notes",
+    "general": "General information",
+    "technical": "Technical information",
+    "operational": "Operational information",
+    "maintenance": "Maintenance information",
+    "noTemplate": "No template bound",
+    "empty": "No UAVs recorded."
+  },
+  "component": {
+    "title": "Installed components",
+    "install": "Install component",
+    "remove": "Remove",
+    "removed": "Removed",
+    "empty": "No components recorded on this UAV.",
+    "name": "Name",
+    "serial": "Serial no",
+    "hours": "Operating hours",
+    "installedAt": "Installed"
+  },
+  "template": {
+    "title": "Maintenance templates",
+    "new": "New template",
+    "items": "Template items",
+    "itemCount": "Items",
+    "empty": "No templates.",
+    "noItems": "This template has no items.",
+    "addItem": "Add item",
+    "taskCode": "Task code",
+    "taskName": "Task name",
+    "componentType": "Component type",
+    "interval": "Interval",
+    "priority": "Priority",
+    "sequence": "Sequence"
+  },
+  "due": {
+    "title": "Upcoming maintenance",
+    "usage": "Usage",
+    "remaining": "Remaining",
+    "status": "Due",
+    "empty": "No due rows. Installed components and template items are required.",
+    "listHint": "Fleet maintenance due items.",
+    "listEmpty": "No due records.",
+    "attention": "Needs attention",
+    "all": "All",
+    "list": "List",
+    "calendar": "Calendar",
+    "calendarHint": "Only calendar-interval items (day / month / year) are shown.",
+    "calendarEmpty": "No calendar due items on this day.",
+    "today": "Today",
+    "prev": "Previous",
+    "next": "Next",
+    "views": {
+      "day": "Day",
+      "week": "Week",
+      "month": "Month"
+    },
+    "weekday": {
+      "1": "Mon",
+      "2": "Tue",
+      "3": "Wed",
+      "4": "Thu",
+      "5": "Fri",
+      "6": "Sat",
+      "7": "Sun"
+    }
+  },
+  "record": {
+    "title": "Maintenance records",
+    "hint": "History created when work orders are completed.",
+    "empty": "No maintenance records.",
+    "performedAt": "Performed"
+  },
+  "dueRules": {
+    "hint": "Thresholds set due status from percent of the template interval used.",
+    "approaching": "Approaching threshold (%)",
+    "due": "Due threshold (%)",
+    "overdue": "Overdue threshold (%)",
+    "critical": "Critical threshold (%)",
+    "orderHint": "Values must increase in order.",
+    "autoCreate": "Auto-create work order when due",
+    "autoCreateHint": "When on, OPEN work orders are created for DUE, OVERDUE and CRITICAL rows. A second open work order is not created for the same item.",
+    "saved": "Rules saved. Dues were recalculated."
+  },
+  "flight": {
+    "title": "Flights",
+    "new": "New flight",
+    "number": "Flight no",
+    "flownOn": "Date",
+    "start": "Start",
+    "end": "End",
+    "duration": "Duration (hours)",
+    "durationOverride": "Duration (optional)",
+    "durationHint": "Leave empty to calculate from start and end",
+    "result": "Result",
+    "counters": "Counters",
+    "applied": "Applied",
+    "pending": "Pending",
+    "complete": "Complete flight",
+    "operator": "Operator",
+    "empty": "No flights recorded.",
+    "demoNote": "DEMO DATA — not an official maintenance standard."
+  },
+  "workOrder": {
+    "title": "Work orders",
+    "new": "New work order",
+    "openTitle": "Open work orders",
+    "openFromDue": "Open work order",
+    "number": "Work order no",
+    "status": "Status",
+    "assignee": "Assignee",
+    "assign": "Assign",
+    "start": "Start",
+    "waitingParts": "Waiting for parts",
+    "complete": "Complete",
+    "cancel": "Cancel",
+    "findings": "Findings",
+    "type": "Maintenance type",
+    "empty": "No work orders."
+  },
+  "failure": {
+    "title": "Failures",
+    "new": "New failure",
+    "hint": "UAV failure events. Due percentages are not computed here.",
+    "empty": "No failures recorded.",
+    "occurredAt": "Occurred at",
+    "discovered": "Discovered during",
+    "severity": "Severity",
+    "mode": "Failure mode",
+    "modeNone": "Not selected",
+    "description": "Description",
+    "downtime": "Downtime (hours)",
+    "resolvedAt": "Resolved at",
+    "resolve": "Mark resolved",
+    "open": "Open",
+    "resolved": "Resolved",
+    "all": "All",
+    "status": "Status",
+    "component": "Component",
+    "demoNote": "DEMO DATA — not an official maintenance standard."
+  },
+  "fmea": {
+    "title": "FMEA",
+    "new": "New FMEA",
+    "hint": "Scoped to class × platform × component type. RPN is computed on the server as S × O × D.",
+    "empty": "No FMEA records.",
+    "emptyItems": "No items.",
+    "titleField": "Analysis title",
+    "allMissions": "All missions",
+    "status": "Status",
+    "revision": "Revision",
+    "approve": "Approve",
+    "items": "Items",
+    "addItem": "Add item",
+    "function": "Function",
+    "functionalFailure": "Functional failure",
+    "failureModeText": "Failure description",
+    "cause": "Cause",
+    "effect": "Effect",
+    "rpnHint": "RPN is not computed in the browser; S × O × D appears after save."
+  },
+  "rcm": {
+    "title": "RCM",
+    "new": "New RCM",
+    "hint": "Scoped to class × platform × component type. The decision tree runs on the server.",
+    "empty": "No RCM records.",
+    "emptyItems": "No items.",
+    "titleField": "Analysis title",
+    "allMissions": "All missions",
+    "status": "Status",
+    "revision": "Revision",
+    "approve": "Approve",
+    "evaluate": "Re-evaluate",
+    "applyToTemplate": "Apply to template",
+    "applyResult": "{count} template item(s) updated to {strategy}.",
+    "items": "Items",
+    "addItem": "Add item",
+    "function": "Function",
+    "functionalFailure": "Functional failure",
+    "failureModeText": "Failure description",
+    "effect": "Effect",
+    "safetyEffect": "Safety effect",
+    "operationalEffect": "Operational effect",
+    "preventiveFeasible": "Preventive maintenance feasible",
+    "detectability": "Detectability",
+    "strategy": "Strategy",
+    "suggested": "Suggested",
+    "strategyOverride": "Strategy (manual)",
+    "useTree": "Use decision tree",
+    "rationale": "Rationale",
+    "overridden": "Overridden",
+    "groundedWarning": "Safety effect with no preventive option — grounded warning",
+    "mixedStrategy": "Mixed",
+    "fmeaItem": "FMEA item",
+    "fmeaItemNone": "No link",
+    "yes": "Yes",
+    "no": "No",
+    "treeHint": "The strategy is not computed in the browser; the server result appears after save. A rationale is required for a manual override."
+  },
+  "reliability": {
+    "title": "Reliability",
+    "hint": "MTBF, MTTR and availability are computed on the server. With zero failures MTBF is undefined.",
+    "mtbf": "MTBF (hours)",
+    "mttr": "MTTR (hours)",
+    "availability": "Availability",
+    "failures": "Failures",
+    "repairs": "Repairs",
+    "operating": "Operating time",
+    "fleet": "Fleet",
+    "lowerBound": "Zero failures — operating time shown as a lower bound"
+  },
+  "comparison": {
+    "title": "Maintenance approach comparison",
+    "hint": "STANDARD and CLASS_SPECIFIC are measured side by side on the same fleet. MTBF, dues and cost are not computed in the browser.",
+    "metric": "Metric",
+    "uavs": "UAV count",
+    "templates": "Template count",
+    "templateItems": "Task items",
+    "dueAttention": "Due attention",
+    "dueOverdue": "Overdue dues",
+    "openWorkOrders": "Open work orders",
+    "allMissions": "All missions"
+  },
+  "part": {
+    "title": "Parts",
+    "new": "New part",
+    "hint": "Stock and class × platform compatibility.",
+    "empty": "No parts.",
+    "number": "Part no",
+    "stock": "Stock",
+    "minStock": "Min. stock",
+    "unitCost": "Unit cost",
+    "currency": "Currency",
+    "supplier": "Supplier",
+    "location": "Location",
+    "status": "Status",
+    "lowStock": "Low stock",
+    "compatibility": "Compatibility",
+    "emptyCompatibility": "No compatibility rows.",
+    "addCompatibility": "Add compatibility",
+    "allClasses": "All classes",
+    "allPlatforms": "All platforms",
+    "qty": "Qty",
+    "select": "Select part",
+    "issue": "Issue to work order",
+    "emptyLines": "No parts on this work order."
+  },
+  "cost": {
+    "title": "Cost",
+    "empty": "No cost records.",
+    "occurredAt": "Date",
+    "part": "Parts",
+    "labor": "Labor",
+    "other": "Other",
+    "total": "Total"
+  },
+  "document": {
+    "title": "Documents",
+    "new": "New document",
+    "hint": "PDF, images and office files can be uploaded (10 MB max).",
+    "empty": "No documents.",
+    "titleField": "Title",
+    "fileName": "File name",
+    "storageKey": "Storage key",
+    "type": "Type",
+    "contentType": "Content type",
+    "noTarget": "None",
+    "storageHint": "A storage key is generated when a file is selected. Older demo records may have no file.",
+    "upload": "File",
+    "download": "Download",
+    "noFile": "No file"
+  },
+  "timeline": {
+    "title": "Event history",
+    "empty": "No events.",
+    "occurredAt": "Time",
+    "event": "Event",
+    "detail": "Detail",
+    "UAV_CREATED": "UAV created",
+    "COMPONENT_INSTALLED": "Component installed",
+    "COMPONENT_REMOVED": "Component removed",
+    "FLIGHT": "Flight",
+    "WORK_ORDER": "Work order",
+    "MAINTENANCE": "Maintenance record",
+    "FAILURE": "Failure",
+    "DOCUMENT": "Document"
+  },
+  "user": {
+    "hint": "Only an administrator can create users and assign roles.",
+    "role": "Role",
+    "active": "Status",
+    "activeYes": "Active",
+    "activeNo": "Inactive",
+    "empty": "No users."
+  },
+  "settings": {
+    "hint": "System thresholds are stored on the server. Raw JSON is not edited here.",
+    "saved": "Settings saved.",
+    "rpn": "RPN thresholds",
+    "rpnLow": "Low max",
+    "rpnMedium": "Medium max",
+    "rpnHigh": "High max",
+    "zeroFailure": "Zero-failure policy",
+    "zeroUndefined": "Undefined (MTBF empty)",
+    "zeroLowerBound": "Operating time as lower bound"
+  },
+  "audit": {
+    "hint": "Change records cannot be deleted.",
+    "empty": "No audit records.",
+    "timestamp": "Time",
+    "user": "User",
+    "action": "Action",
+    "entity": "Entity",
+    "message": "Message"
+  },
+  "report": {
+    "title": "Reports",
+    "hint": "PDF and Excel are generated on the server. Due percent and RPN are not computed in the browser.",
+    "pdf": "PDF",
+    "xlsx": "Excel",
+    "downloadPdf": "Download PDF",
+    "downloadXlsx": "Download Excel",
+    "from": "From",
+    "to": "To",
+    "allUavs": "Entire fleet",
+    "exportDenied": "You can view reports but you cannot export them.",
+    "types": {
+      "uav-history": "UAV history",
+      "maintenance": "Maintenance records",
+      "work-order": "Work orders",
+      "failure": "Failures",
+      "fmea": "FMEA",
+      "rcm": "RCM",
+      "fleet": "Fleet",
+      "reliability": "Reliability",
+      "cost": "Cost",
+      "approach-comparison": "STANDARD vs CLASS_SPECIFIC",
+      "uavs": "UAV list",
+      "components": "Components",
+      "flights": "Flights",
+      "failures": "Failures",
+      "costs": "Costs"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "hint": "Name, language and password. Language is stored on your account.",
+    "language": "Language",
+    "password": "Change password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "saved": "Profile saved."
+  },
+  "technician": {
+    "employeeNumber": "Employee no",
+    "fullName": "Full name",
+    "status": "Status",
+    "empty": "No technician profiles.",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "skills": "Skills",
+    "skill": "Skill",
+    "addSkill": "Add skill",
+    "noSkills": "No assigned skills.",
+    "certifications": "Certifications",
+    "addCertification": "Add certification",
+    "noCertifications": "No certifications.",
+    "issuer": "Issuer",
+    "certifiedAt": "Certified",
+    "issuedAt": "Issued",
+    "expiresAt": "Expires",
+    "documentId": "Document no"
+  },
+  "enums": {
+    "uav_status": {
+      "READY": "Ready",
+      "MAINTENANCE": "Maintenance",
+      "GROUNDED": "Grounded",
+      "RETIRED": "Retired"
+    },
+    "component_status": {
+      "INSTALLED": "Installed",
+      "REMOVED": "Removed",
+      "QUARANTINE": "Quarantine",
+      "SCRAPPED": "Scrapped"
+    },
+    "maintenance_approach": {
+      "STANDARD": "Standard maintenance",
+      "CLASS_SPECIFIC": "Class-specific maintenance"
+    },
+    "due_status": {
+      "NORMAL": "Normal",
+      "APPROACHING": "Approaching",
+      "DUE": "Due",
+      "OVERDUE": "Overdue",
+      "CRITICAL": "Critical"
+    },
+    "priority": {
+      "LOW": "Low",
+      "MEDIUM": "Medium",
+      "HIGH": "High",
+      "CRITICAL": "Critical"
+    },
+    "interval_unit": {
+      "FLIGHT_HOURS": "flight hours",
+      "FLIGHT_CYCLES": "flight cycles",
+      "COMPONENT_CYCLES": "component cycles",
+      "CALENDAR_DAYS": "days",
+      "CALENDAR_MONTHS": "months",
+      "CALENDAR_YEARS": "years"
+    },
+    "inspection_type": {
+      "VISUAL": "Visual",
+      "FUNCTIONAL": "Functional",
+      "MEASUREMENT": "Measurement",
+      "OVERHAUL": "Overhaul",
+      "REPLACEMENT": "Replacement",
+      "LUBRICATION": "Lubrication",
+      "SOFTWARE": "Software"
+    },
+    "rcm_strategy": {
+      "SCHEDULED_INSPECTION": "Scheduled inspection",
+      "SCHEDULED_RESTORATION": "Scheduled restoration",
+      "SCHEDULED_DISCARD": "Scheduled discard",
+      "CONDITION_INSPECTION": "On-condition inspection",
+      "FUNCTIONAL_CHECK": "Functional check",
+      "CORRECTIVE": "Corrective"
+    },
+    "flight_result": {
+      "COMPLETED": "Completed",
+      "ABORTED": "Aborted",
+      "TRAINING": "Training"
+    },
+    "work_order_status": {
+      "OPEN": "Open",
+      "ASSIGNED": "Assigned",
+      "IN_PROGRESS": "In progress",
+      "WAITING_PARTS": "Waiting for parts",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
+    },
+    "maintenance_type": {
+      "PREVENTIVE": "Preventive",
+      "CORRECTIVE": "Corrective",
+      "SCHEDULED": "Scheduled",
+      "UNSCHEDULED": "Unscheduled",
+      "INSPECTION": "Inspection",
+      "FUNCTIONAL_CHECK": "Functional check"
+    },
+    "technician_status": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
+    "discovered_during": {
+      "FLIGHT": "Flight",
+      "INSPECTION": "Inspection",
+      "MAINTENANCE": "Maintenance",
+      "OTHER": "Other"
+    },
+    "failure_severity": {
+      "LOW": "Low",
+      "MEDIUM": "Medium",
+      "HIGH": "High",
+      "CRITICAL": "Critical"
+    },
+    "fmea_status": {
+      "DRAFT": "Draft",
+      "IN_REVIEW": "In review",
+      "APPROVED": "Approved",
+      "ARCHIVED": "Archived"
+    },
+    "rcm_status": {
+      "DRAFT": "Draft",
+      "IN_REVIEW": "In review",
+      "APPROVED": "Approved",
+      "ARCHIVED": "Archived"
+    },
+    "detectability": {
+      "LOW": "Low",
+      "MEDIUM": "Medium",
+      "HIGH": "High"
+    },
+    "part_status": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
+    "rpn_band": {
+      "LOW": "Low",
+      "MEDIUM": "Medium",
+      "HIGH": "High",
+      "CRITICAL": "Critical"
+    },
+    "document_type": {
+      "MANUAL": "Manual",
+      "PROCEDURE": "Procedure",
+      "CERTIFICATE": "Certificate",
+      "PHOTO": "Photo",
+      "REPORT": "Report",
+      "OTHER": "Other"
+    }
+  },
+  "catalog": {
+    "code": "Code",
+    "name": "Name",
+    "description": "Description",
+    "active": "Active"
+  }
+}

@@ -1,0 +1,748 @@
+{
+  "common": {
+    "appName": "İHA Bakım Yönetim Sistemi",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "loading": "Yükleniyor",
+    "demo": "DEMO",
+    "search": "Ara",
+    "create": "Ekle",
+    "back": "Geri",
+    "actions": "İşlemler",
+    "edit": "Düzenle",
+    "delete": "Sil",
+    "viewAll": "Tümünü gör"
+  },
+  "search": {
+    "empty": "Sonuç yok.",
+    "entity": {
+      "uav": "İHA",
+      "component": "Komponent",
+      "work_order": "İş emri",
+      "maintenance": "Bakım",
+      "failure": "Arıza",
+      "part": "Parça"
+    }
+  },
+  "chart": {
+    "fleet": "Filo durumu",
+    "dues": "Bakım vadeleri",
+    "comparison": "Yaklaşım karşılaştırması"
+  },
+  "auth": {
+    "login": "Giriş",
+    "email": "E-posta",
+    "password": "Parola",
+    "forgotPassword": "Parolamı unuttum",
+    "submit": "Oturum aç",
+    "logout": "Çıkış",
+    "resetHint": "E-posta gönderilmez. Geliştirme ortamında sıfırlama bağlantısı gösterilir.",
+    "resetSubmit": "Sıfırlama iste",
+    "resetSent": "Hesap varsa sıfırlama hazırlanır. Bu demoda bağlantı aşağıda görünür.",
+    "resetContinue": "Yeni parola belirle",
+    "resetPassword": "Yeni parola",
+    "resetPasswordHint": "Bağlantıdaki jeton ile parolayı değiştirin.",
+    "newPassword": "Yeni parola"
+  },
+  "brand": {
+    "university": "Fırat Üniversitesi",
+    "program": "Havacılık Bilimi ve Teknolojileri",
+    "degree": "Tezli Yüksek Lisans Programı",
+    "student": "Öğrenci: Sermet BAYAZİT",
+    "advisor": "Danışman: Dr. Ukbe Usame UÇAR"
+  },
+  "navigation": {
+    "dashboard": "Özet",
+    "fleet": "Filo",
+    "maintenance": "Bakım",
+    "workOrders": "İş emirleri",
+    "flights": "Uçuşlar",
+    "failures": "Arızalar",
+    "fmea": "FMEA",
+    "rcm": "RCM",
+    "parts": "Parçalar",
+    "documents": "Dokümanlar",
+    "reliability": "Güvenilirlik",
+    "comparison": "Karşılaştırma",
+    "reports": "Raporlar",
+    "admin": "Kontrol merkezi"
+  },
+  "dashboard": {
+    "title": "Filo özeti",
+    "subtitle": "Vadesi gelen bakımlar ve açık iş emirleri.",
+    "placeholder": "İskelet aşaması — iş ekranları sonraki fazda eklenecek.",
+    "dues": "Bakım vadeleri",
+    "workOrders": "Açık iş emirleri",
+    "openWorkOrders": "Açık iş emri",
+    "emptyDues": "Dikkat gereken bakım yok.",
+    "emptyWorkOrders": "Açık iş emri yok."
+  },
+  "notifications": {
+    "title": "Bildirimler",
+    "all": "Tümü",
+    "empty": "Bildirim yok.",
+    "markRead": "Okundu",
+    "markAll": "Tümünü okundu işaretle",
+    "titles": {
+      "MAINTENANCE_DUE": "Bakım vadesi geldi",
+      "MAINTENANCE_OVERDUE": "Bakım gecikti",
+      "CRITICAL_COMPONENT": "Kritik bakım eşiği",
+      "MAINTENANCE_APPROACHING": "Bakım yaklaşıyor",
+      "LOW_STOCK": "Düşük stok",
+      "WORK_ORDER_ASSIGNED": "İş emri atandı",
+      "WORK_ORDER_COMPLETED": "İş emri tamamlandı"
+    },
+    "bodies": {
+      "MAINTENANCE_DUE": "Bir bakım kalemi vade eşiğini aştı.",
+      "MAINTENANCE_OVERDUE": "Bir bakım kalemi gecikme eşiğini aştı.",
+      "CRITICAL_COMPONENT": "Bir bakım kalemi kritik eşiği aştı.",
+      "MAINTENANCE_APPROACHING": "Bir bakım kalemi yaklaşma eşiğine girdi.",
+      "LOW_STOCK": "Parça stoğu düşük.",
+      "WORK_ORDER_ASSIGNED": "Size bir iş emri atandı.",
+      "WORK_ORDER_COMPLETED": "Bir iş emri tamamlandı."
+    }
+  },
+  "admin": {
+    "title": "Bakım Kontrol Merkezi",
+    "overview": "Genel bakış",
+    "overviewSubtitle": "Filo durumu, iş emri dağılımı ve gecikmiş bakımlar.",
+    "workOrderDistribution": "İş emri durum dağılımı",
+    "overdueTasks": "Gecikmiş görevler",
+    "emptyOverdue": "Gecikmiş bakım yok.",
+    "classes": "İHA sınıfları",
+    "platforms": "Platformlar",
+    "missions": "Görev tipleri",
+    "components": "Komponent türleri",
+    "templates": "Bakım şablonları",
+    "rules": "Bakım kuralları",
+    "technicians": "Teknisyenler",
+    "skills": "Yetenekler",
+    "users": "Kullanıcılar",
+    "settings": "Ayarlar",
+    "audit": "Denetim kaydı"
+  },
+  "errors": {
+    "generic": "İşlem tamamlanamadı.",
+    "network": "Sunucuya bağlanılamadı. Lütfen tekrar deneyin.",
+    "auth": {
+      "invalid_credentials": "E-posta veya parola hatalı.",
+      "invalid_refresh": "Oturum yenilenemedi.",
+      "token_not_valid": "Oturum geçersiz veya süresi doldu. Yeniden giriş yapın.",
+      "invalid_current_password": "Mevcut parola hatalı.",
+      "invalid_new_password": "Yeni parola kurallara uymuyor.",
+      "invalid_locale": "Dil tr, en veya az olmalıdır.",
+      "invalid_reset_token": "Sıfırlama bağlantısı geçersiz veya süresi dolmuş."
+    },
+    "maintenance": {
+      "template_not_found": "Bu sınıf, platform ve görev için bakım şablonu yok.",
+      "resolve_params": "Şablon eşlemesi için sınıf, platform, görev ve yaklaşım gerekli.",
+      "invalid_due_rules": "Vade eşikleri artan sırada olmalıdır (yaklaşıyor < vadesi geldi < gecikti < kritik)."
+    },
+    "flight": {
+      "counters_already_applied": "Bu uçuşun sayaçları zaten işlendi.",
+      "invalid_interval": "Bitiş zamanı başlangıçtan sonra olmalıdır."
+    },
+    "work_order": {
+      "invalid_transition": "Bu durum geçişi izinli değil.",
+      "already_open": "Bu vade kalemi için açık iş emri zaten var.",
+      "already_completed": "İş emri zaten tamamlandı."
+    },
+    "technician": {
+      "inactive": "Teknisyen aktif değil.",
+      "profile_exists": "Bu kullanıcının teknisyen profili zaten var.",
+      "email_taken": "Bu e-posta ile kullanıcı zaten kayıtlı.",
+      "skill_code_taken": "Bu yetenek kodu zaten kayıtlı.",
+      "skill_exists": "Bu yetenek teknisyene zaten atanmış.",
+      "invalid_dates": "Bitiş tarihi, düzenleme veya sertifika tarihinden önce olamaz."
+    },
+    "failure": {
+      "invalid_dates": "Çözüm zamanı, oluş zamanından önce olamaz.",
+      "invalid_component": "Seçilen komponent bu İHA'ya ait değil.",
+      "invalid_work_order": "Seçilen iş emri bu İHA'ya ait değil.",
+      "invalid_downtime": "Duruş süresi negatif olamaz.",
+      "mode_code_taken": "Bu arıza modu kodu zaten kayıtlı."
+    },
+    "fmea": {
+      "code_taken": "Bu FMEA kodu zaten kayıtlı.",
+      "locked": "Onaylı FMEA düzenlenemez.",
+      "already_approved": "FMEA zaten onaylı.",
+      "invalid_scores": "Şiddet, oluşum ve tespit 1 ile 10 arasında tam sayı olmalıdır."
+    },
+    "rcm": {
+      "code_taken": "Bu RCM kodu zaten kayıtlı.",
+      "locked": "Onaylı RCM düzenlenemez.",
+      "already_approved": "RCM zaten onaylı.",
+      "rationale_required": "Karar ağacı değiştirilirken gerekçe zorunludur.",
+      "not_approved": "Şablona yalnızca onaylı RCM aktarılabilir.",
+      "strategy_conflict": "Kalemler tek bir ortak strateji paylaşmıyor."
+    },
+    "reliability": {
+      "invalid_scope": "Kapsam filo, sınıf, İHA veya komponent olmalıdır.",
+      "invalid_range": "Tarih aralığı geçersiz.",
+      "scope_not_found": "Güvenilirlik kapsamı bulunamadı."
+    },
+    "part": {
+      "number_taken": "Bu parça numarası zaten kayıtlı.",
+      "incompatible": "Parça bu İHA veya komponent ile uyumlu değil.",
+      "insufficient_stock": "Stok bu çıkış için yetersiz.",
+      "invalid_quantity": "Miktar sıfırdan büyük olmalıdır."
+    },
+    "cost": {
+      "invalid_amount": "Maliyet tutarları negatif olamaz."
+    },
+    "document": {
+      "target_required": "Doküman bir İHA, komponent, şablon veya iş emrine bağlanmalıdır.",
+      "file_required": "Dosya yükleyin veya dosya adı ile depolama anahtarı girin.",
+      "file_too_large": "Dosya boyutu 10 MB sınırını aşıyor.",
+      "file_type_invalid": "Bu dosya türüne izin verilmiyor.",
+      "file_missing": "Bu kayıt için saklanan dosya yok.",
+      "storage_key_taken": "Bu depolama anahtarı zaten kullanılıyor."
+    },
+    "user": {
+      "email_taken": "Bu e-posta ile kullanıcı zaten kayıtlı.",
+      "last_admin": "Son aktif yönetici kaldırılamaz."
+    },
+    "settings": {
+      "invalid_value": "Ayar değeri geçersiz."
+    },
+    "report": {
+      "invalid_type": "Bilinmeyen rapor tipi.",
+      "uav_required": "Bu rapor için İHA seçilmelidir."
+    },
+    "component": {
+      "type_inactive": "Komponent türü aktif değil.",
+      "serial_taken": "Bu seri numarası zaten takılı.",
+      "not_installed": "Komponent şu an takılı değil.",
+      "open_work_order": "Sökmeden önce açık iş emirleri kapatılmalıdır.",
+      "uav_retired": "Envanter dışı İHA’da komponent takılıp sökülemez.",
+      "invalid_dates": "Sökme zamanı takılma zamanından önce olamaz."
+    }
+  },
+  "uav": {
+    "title": "Filo",
+    "new": "Yeni İHA",
+    "edit": "İHA düzenle",
+    "detail": "İHA detayı",
+    "registration": "Tescil no",
+    "serial": "Seri no",
+    "manufacturer": "Üretici",
+    "model": "Model",
+    "class": "Sınıf",
+    "platform": "Platform",
+    "mission": "Görev tipi",
+    "approach": "Bakım yaklaşımı",
+    "template": "Bakım şablonu",
+    "status": "Durum",
+    "mtow": "MTOW (kg)",
+    "productionDate": "Üretim tarihi",
+    "inventoryDate": "Envanter giriş tarihi",
+    "hours": "Uçuş saati",
+    "flights": "Uçuş sayısı",
+    "cycles": "Çevrim",
+    "notes": "Notlar",
+    "general": "Genel bilgiler",
+    "technical": "Teknik bilgiler",
+    "operational": "Operasyonel bilgiler",
+    "maintenance": "Bakım bilgileri",
+    "noTemplate": "Şablon bağlanmadı",
+    "empty": "Kayıtlı İHA yok."
+  },
+  "component": {
+    "title": "Takılı komponentler",
+    "install": "Komponent tak",
+    "remove": "Sök",
+    "removed": "Söküldü",
+    "empty": "Bu İHA’da komponent kaydı yok.",
+    "name": "Ad",
+    "serial": "Seri no",
+    "hours": "Çalışma saati",
+    "installedAt": "Takılma"
+  },
+  "template": {
+    "title": "Bakım şablonları",
+    "new": "Yeni şablon",
+    "items": "Şablon kalemleri",
+    "itemCount": "Kalem",
+    "empty": "Şablon yok.",
+    "noItems": "Bu şablonda kalem yok.",
+    "addItem": "Kalem ekle",
+    "taskCode": "Görev kodu",
+    "taskName": "Görev adı",
+    "componentType": "Komponent türü",
+    "interval": "Aralık",
+    "priority": "Öncelik",
+    "sequence": "Sıra"
+  },
+  "due": {
+    "title": "Sonraki bakımlar",
+    "usage": "Kullanım",
+    "remaining": "Kalan",
+    "status": "Vade",
+    "empty": "Vade satırı yok. Kurulu komponent ve şablon kalemi gerekir.",
+    "listHint": "Filodaki bakım vadeleri.",
+    "listEmpty": "Vade kaydı yok.",
+    "attention": "Dikkat gerekenler",
+    "all": "Tümü",
+    "list": "Liste",
+    "calendar": "Takvim",
+    "calendarHint": "Yalnızca takvim aralıklı bakımlar (gün / ay / yıl) görünür.",
+    "calendarEmpty": "Bu günde takvim vadesi yok.",
+    "today": "Bugün",
+    "prev": "Önceki",
+    "next": "Sonraki",
+    "views": {
+      "day": "Gün",
+      "week": "Hafta",
+      "month": "Ay"
+    },
+    "weekday": {
+      "1": "Pzt",
+      "2": "Sal",
+      "3": "Çar",
+      "4": "Per",
+      "5": "Cum",
+      "6": "Cmt",
+      "7": "Paz"
+    }
+  },
+  "record": {
+    "title": "Bakım kayıtları",
+    "hint": "Tamamlanmış iş emirlerinden oluşan bakım geçmişi.",
+    "empty": "Bakım kaydı yok.",
+    "performedAt": "Yapılış"
+  },
+  "dueRules": {
+    "hint": "Eşikler, şablon aralığının yüzde kaçının kullanıldığına göre vade durumunu belirler.",
+    "approaching": "Yaklaşıyor eşiği (%)",
+    "due": "Vadesi geldi eşiği (%)",
+    "overdue": "Gecikti eşiği (%)",
+    "critical": "Kritik eşiği (%)",
+    "orderHint": "Değerler artan sırada olmalıdır.",
+    "autoCreate": "Vade geldiğinde otomatik iş emri aç",
+    "autoCreateHint": "Açıksa DUE, OVERDUE ve CRITICAL satırları için OPEN iş emri oluşturulur. Aynı kalemde ikinci açık iş emri açılmaz.",
+    "saved": "Kurallar kaydedildi. Vadeler yeniden hesaplandı."
+  },
+  "flight": {
+    "title": "Uçuşlar",
+    "new": "Yeni uçuş",
+    "number": "Uçuş no",
+    "flownOn": "Tarih",
+    "start": "Başlangıç",
+    "end": "Bitiş",
+    "duration": "Süre (saat)",
+    "durationOverride": "Süre (isteğe bağlı)",
+    "durationHint": "Boş bırakılırsa başlangıç–bitişten hesaplanır",
+    "result": "Sonuç",
+    "counters": "Sayaç",
+    "applied": "İşlendi",
+    "pending": "Bekliyor",
+    "complete": "Uçuşu tamamla",
+    "operator": "Operatör",
+    "empty": "Uçuş kaydı yok.",
+    "demoNote": "DEMO DATA — resmi bakım standardı değildir."
+  },
+  "workOrder": {
+    "title": "İş emirleri",
+    "new": "Yeni iş emri",
+    "openTitle": "Açık iş emirleri",
+    "openFromDue": "İş emri aç",
+    "number": "İş emri no",
+    "status": "Durum",
+    "assignee": "Atanan",
+    "assign": "Ata",
+    "start": "Başlat",
+    "waitingParts": "Parça bekliyor",
+    "complete": "Tamamla",
+    "cancel": "İptal et",
+    "findings": "Bulgular",
+    "type": "Bakım tipi",
+    "empty": "İş emri yok."
+  },
+  "failure": {
+    "title": "Arızalar",
+    "new": "Yeni arıza",
+    "hint": "İHA arıza olayları. Vade yüzdesi burada hesaplanmaz.",
+    "empty": "Arıza kaydı yok.",
+    "occurredAt": "Oluş zamanı",
+    "discovered": "Tespit",
+    "severity": "Şiddet",
+    "mode": "Arıza modu",
+    "modeNone": "Seçilmedi",
+    "description": "Açıklama",
+    "downtime": "Duruş (saat)",
+    "resolvedAt": "Çözüm zamanı",
+    "resolve": "Çözüldü işaretle",
+    "open": "Açık",
+    "resolved": "Çözüldü",
+    "all": "Tümü",
+    "status": "Durum",
+    "component": "Komponent",
+    "demoNote": "DEMO DATA — resmi bakım standardı değildir."
+  },
+  "fmea": {
+    "title": "FMEA",
+    "new": "Yeni FMEA",
+    "hint": "Sınıf × platform × komponent türü kapsamı. RPN sunucuda S × O × D olarak hesaplanır.",
+    "empty": "FMEA kaydı yok.",
+    "emptyItems": "Kalem yok.",
+    "titleField": "Analiz adı",
+    "allMissions": "Tüm görevler",
+    "status": "Durum",
+    "revision": "Revizyon",
+    "approve": "Onayla",
+    "items": "Kalemler",
+    "addItem": "Kalem ekle",
+    "function": "İşlev",
+    "functionalFailure": "İşlevsel arıza",
+    "failureModeText": "Arıza tanımı",
+    "cause": "Neden",
+    "effect": "Etki",
+    "rpnHint": "RPN tarayıcıda hesaplanmaz; kayıt sonrası S × O × D sonucu görünür."
+  },
+  "rcm": {
+    "title": "RCM",
+    "new": "Yeni RCM",
+    "hint": "Sınıf × platform × komponent türü kapsamı. Strateji karar ağacı sunucuda hesaplanır.",
+    "empty": "RCM kaydı yok.",
+    "emptyItems": "Kalem yok.",
+    "titleField": "Analiz adı",
+    "allMissions": "Tüm görevler",
+    "status": "Durum",
+    "revision": "Revizyon",
+    "approve": "Onayla",
+    "evaluate": "Yeniden değerlendir",
+    "applyToTemplate": "Şablona aktar",
+    "applyResult": "{count} şablon kalemi {strategy} olarak güncellendi.",
+    "items": "Kalemler",
+    "addItem": "Kalem ekle",
+    "function": "İşlev",
+    "functionalFailure": "İşlevsel arıza",
+    "failureModeText": "Arıza tanımı",
+    "effect": "Etki",
+    "safetyEffect": "Güvenlik etkisi",
+    "operationalEffect": "Operasyonel etki",
+    "preventiveFeasible": "Önleyici bakım mümkün mü",
+    "detectability": "Tespit edilebilirlik",
+    "strategy": "Strateji",
+    "suggested": "Önerilen",
+    "strategyOverride": "Strateji (manuel)",
+    "useTree": "Karar ağacını kullan",
+    "rationale": "Gerekçe",
+    "overridden": "Manuel",
+    "groundedWarning": "Güvenlik etkisi var, önleyici bakım yok — yerde tutma uyarısı",
+    "mixedStrategy": "Karışık",
+    "fmeaItem": "FMEA kalemi",
+    "fmeaItemNone": "Bağlantı yok",
+    "yes": "Evet",
+    "no": "Hayır",
+    "treeHint": "Strateji tarayıcıda hesaplanmaz; kayıt sonrası sunucu kararı görünür. Manuel seçimde gerekçe zorunludur."
+  },
+  "reliability": {
+    "title": "Güvenilirlik",
+    "hint": "MTBF, MTTR ve Availability sunucuda hesaplanır. Sıfır arızada MTBF tanımsızdır.",
+    "mtbf": "MTBF (saat)",
+    "mttr": "MTTR (saat)",
+    "availability": "Availability",
+    "failures": "Arıza sayısı",
+    "repairs": "Onarım sayısı",
+    "operating": "Çalışma süresi",
+    "fleet": "Filo",
+    "lowerBound": "Sıfır arıza — çalışma süresi alt sınır olarak gösterildi"
+  },
+  "comparison": {
+    "title": "Bakım yaklaşımı karşılaştırması",
+    "hint": "STANDARD ve CLASS_SPECIFIC aynı filoda yan yana ölçülür. MTBF, vade ve maliyet tarayıcıda hesaplanmaz.",
+    "metric": "Ölçüt",
+    "uavs": "İHA sayısı",
+    "templates": "Şablon sayısı",
+    "templateItems": "Görev kalemi",
+    "dueAttention": "Dikkat gereken vade",
+    "dueOverdue": "Gecikmiş vade",
+    "openWorkOrders": "Açık iş emri",
+    "allMissions": "Tüm görevler"
+  },
+  "part": {
+    "title": "Parçalar",
+    "new": "Yeni parça",
+    "hint": "Stok ve sınıf × platform uyumluluğu.",
+    "empty": "Parça kaydı yok.",
+    "number": "Parça no",
+    "stock": "Stok",
+    "minStock": "Min. stok",
+    "unitCost": "Birim maliyet",
+    "currency": "Para birimi",
+    "supplier": "Tedarikçi",
+    "location": "Konum",
+    "status": "Durum",
+    "lowStock": "Düşük stok",
+    "compatibility": "Uyumluluk",
+    "emptyCompatibility": "Uyumluluk kaydı yok.",
+    "addCompatibility": "Uyumluluk ekle",
+    "allClasses": "Tüm sınıflar",
+    "allPlatforms": "Tüm platformlar",
+    "qty": "Miktar",
+    "select": "Parça seç",
+    "issue": "İş emrine çıkar",
+    "emptyLines": "Bu iş emrinde parça yok."
+  },
+  "cost": {
+    "title": "Maliyet",
+    "empty": "Maliyet kaydı yok.",
+    "occurredAt": "Tarih",
+    "part": "Parça",
+    "labor": "İşçilik",
+    "other": "Diğer",
+    "total": "Toplam"
+  },
+  "document": {
+    "title": "Dokümanlar",
+    "new": "Yeni doküman",
+    "hint": "PDF, görüntü ve ofis dosyaları yüklenebilir (en fazla 10 MB).",
+    "empty": "Doküman kaydı yok.",
+    "titleField": "Başlık",
+    "fileName": "Dosya adı",
+    "storageKey": "Depolama anahtarı",
+    "type": "Tür",
+    "contentType": "İçerik tipi",
+    "noTarget": "Seçilmedi",
+    "storageHint": "Dosya seçildiğinde depolama anahtarı otomatik üretilir. Eski demo kayıtlarında dosya olmayabilir.",
+    "upload": "Dosya",
+    "download": "İndir",
+    "noFile": "Dosya yok"
+  },
+  "timeline": {
+    "title": "Olay geçmişi",
+    "empty": "Olay yok.",
+    "occurredAt": "Zaman",
+    "event": "Olay",
+    "detail": "Ayrıntı",
+    "UAV_CREATED": "İHA oluşturuldu",
+    "COMPONENT_INSTALLED": "Komponent kuruldu",
+    "COMPONENT_REMOVED": "Komponent söküldü",
+    "FLIGHT": "Uçuş",
+    "WORK_ORDER": "İş emri",
+    "MAINTENANCE": "Bakım kaydı",
+    "FAILURE": "Arıza",
+    "DOCUMENT": "Doküman"
+  },
+  "user": {
+    "hint": "Yalnızca yönetici kullanıcı oluşturabilir ve rol atayabilir.",
+    "role": "Rol",
+    "active": "Durum",
+    "activeYes": "Aktif",
+    "activeNo": "Pasif",
+    "empty": "Kullanıcı yok."
+  },
+  "settings": {
+    "hint": "Sistem eşikleri sunucuda saklanır. Ham JSON düzenlenmez.",
+    "saved": "Ayarlar kaydedildi.",
+    "rpn": "RPN eşikleri",
+    "rpnLow": "Düşük üst sınır",
+    "rpnMedium": "Orta üst sınır",
+    "rpnHigh": "Yüksek üst sınır",
+    "zeroFailure": "Sıfır arıza politikası",
+    "zeroUndefined": "Tanımsız (MTBF boş)",
+    "zeroLowerBound": "Çalışma süresi alt sınır"
+  },
+  "audit": {
+    "hint": "Değişiklik kayıtları silinemez.",
+    "empty": "Denetim kaydı yok.",
+    "timestamp": "Zaman",
+    "user": "Kullanıcı",
+    "action": "İşlem",
+    "entity": "Varlık",
+    "message": "Mesaj"
+  },
+  "report": {
+    "title": "Raporlar",
+    "hint": "PDF ve Excel sunucuda üretilir. Vade yüzdesi veya RPN tarayıcıda hesaplanmaz.",
+    "pdf": "PDF",
+    "xlsx": "Excel",
+    "downloadPdf": "PDF indir",
+    "downloadXlsx": "Excel indir",
+    "from": "Başlangıç",
+    "to": "Bitiş",
+    "allUavs": "Tüm filo",
+    "exportDenied": "Dışa aktarma izniniz yok; raporu yalnızca görüntüleyebilirsiniz.",
+    "types": {
+      "uav-history": "İHA geçmişi",
+      "maintenance": "Bakım kayıtları",
+      "work-order": "İş emirleri",
+      "failure": "Arızalar",
+      "fmea": "FMEA",
+      "rcm": "RCM",
+      "fleet": "Filo",
+      "reliability": "Güvenilirlik",
+      "cost": "Maliyet",
+      "approach-comparison": "STANDARD vs CLASS_SPECIFIC",
+      "uavs": "İHA listesi",
+      "components": "Komponentler",
+      "flights": "Uçuşlar",
+      "failures": "Arızalar",
+      "costs": "Maliyetler"
+    }
+  },
+  "profile": {
+    "title": "Profil",
+    "hint": "Ad, dil ve parola. Dil kaydı hesabınıza yazılır.",
+    "language": "Dil",
+    "password": "Parola değiştir",
+    "currentPassword": "Mevcut parola",
+    "newPassword": "Yeni parola",
+    "saved": "Profil kaydedildi."
+  },
+  "technician": {
+    "employeeNumber": "Sicil no",
+    "fullName": "Ad soyad",
+    "status": "Durum",
+    "empty": "Teknisyen profili yok.",
+    "activate": "Aktifleştir",
+    "deactivate": "Pasifleştir",
+    "skills": "Yetenekler",
+    "skill": "Yetenek",
+    "addSkill": "Yetenek ekle",
+    "noSkills": "Atanmış yetenek yok.",
+    "certifications": "Sertifikalar",
+    "addCertification": "Sertifika ekle",
+    "noCertifications": "Sertifika kaydı yok.",
+    "issuer": "Veren kurum",
+    "certifiedAt": "Belgelenme",
+    "issuedAt": "Veriliş",
+    "expiresAt": "Geçerlilik",
+    "documentId": "Belge no"
+  },
+  "enums": {
+    "uav_status": {
+      "READY": "Hazır",
+      "MAINTENANCE": "Bakımda",
+      "GROUNDED": "Yere çekildi",
+      "RETIRED": "Envanter dışı"
+    },
+    "component_status": {
+      "INSTALLED": "Takılı",
+      "REMOVED": "Söküldü",
+      "QUARANTINE": "Karantina",
+      "SCRAPPED": "Hurda"
+    },
+    "maintenance_approach": {
+      "STANDARD": "Standart bakım",
+      "CLASS_SPECIFIC": "Sınıfa özgü bakım"
+    },
+    "due_status": {
+      "NORMAL": "Normal",
+      "APPROACHING": "Yaklaşıyor",
+      "DUE": "Vadesi geldi",
+      "OVERDUE": "Gecikti",
+      "CRITICAL": "Kritik"
+    },
+    "priority": {
+      "LOW": "Düşük",
+      "MEDIUM": "Orta",
+      "HIGH": "Yüksek",
+      "CRITICAL": "Kritik"
+    },
+    "interval_unit": {
+      "FLIGHT_HOURS": "uçuş saati",
+      "FLIGHT_CYCLES": "uçuş çevrimi",
+      "COMPONENT_CYCLES": "komponent çevrimi",
+      "CALENDAR_DAYS": "gün",
+      "CALENDAR_MONTHS": "ay",
+      "CALENDAR_YEARS": "yıl"
+    },
+    "inspection_type": {
+      "VISUAL": "Görsel",
+      "FUNCTIONAL": "İşlevsel",
+      "MEASUREMENT": "Ölçüm",
+      "OVERHAUL": "Revizyon",
+      "REPLACEMENT": "Değişim",
+      "LUBRICATION": "Yağlama",
+      "SOFTWARE": "Yazılım"
+    },
+    "rcm_strategy": {
+      "SCHEDULED_INSPECTION": "Planlı muayene",
+      "SCHEDULED_RESTORATION": "Planlı onarım",
+      "SCHEDULED_DISCARD": "Planlı hurda",
+      "CONDITION_INSPECTION": "Durum muayenesi",
+      "FUNCTIONAL_CHECK": "İşlev kontrolü",
+      "CORRECTIVE": "Düzeltici"
+    },
+    "flight_result": {
+      "COMPLETED": "Tamamlandı",
+      "ABORTED": "Yarıda kesildi",
+      "TRAINING": "Eğitim"
+    },
+    "work_order_status": {
+      "OPEN": "Açık",
+      "ASSIGNED": "Atandı",
+      "IN_PROGRESS": "Devam ediyor",
+      "WAITING_PARTS": "Parça bekliyor",
+      "COMPLETED": "Tamamlandı",
+      "CANCELLED": "İptal"
+    },
+    "maintenance_type": {
+      "PREVENTIVE": "Önleyici",
+      "CORRECTIVE": "Düzeltici",
+      "SCHEDULED": "Planlı",
+      "UNSCHEDULED": "Plansız",
+      "INSPECTION": "Muayene",
+      "FUNCTIONAL_CHECK": "İşlev kontrolü"
+    },
+    "technician_status": {
+      "ACTIVE": "Aktif",
+      "INACTIVE": "Pasif"
+    },
+    "discovered_during": {
+      "FLIGHT": "Uçuş",
+      "INSPECTION": "Muayene",
+      "MAINTENANCE": "Bakım",
+      "OTHER": "Diğer"
+    },
+    "failure_severity": {
+      "LOW": "Düşük",
+      "MEDIUM": "Orta",
+      "HIGH": "Yüksek",
+      "CRITICAL": "Kritik"
+    },
+    "fmea_status": {
+      "DRAFT": "Taslak",
+      "IN_REVIEW": "İncelemede",
+      "APPROVED": "Onaylı",
+      "ARCHIVED": "Arşiv"
+    },
+    "rcm_status": {
+      "DRAFT": "Taslak",
+      "IN_REVIEW": "İncelemede",
+      "APPROVED": "Onaylı",
+      "ARCHIVED": "Arşiv"
+    },
+    "detectability": {
+      "LOW": "Düşük",
+      "MEDIUM": "Orta",
+      "HIGH": "Yüksek"
+    },
+    "part_status": {
+      "ACTIVE": "Aktif",
+      "INACTIVE": "Pasif"
+    },
+    "rpn_band": {
+      "LOW": "Düşük",
+      "MEDIUM": "Orta",
+      "HIGH": "Yüksek",
+      "CRITICAL": "Kritik"
+    },
+    "document_type": {
+      "MANUAL": "El kitabı",
+      "PROCEDURE": "Prosedür",
+      "CERTIFICATE": "Sertifika",
+      "PHOTO": "Fotoğraf",
+      "REPORT": "Rapor",
+      "OTHER": "Diğer"
+    }
+  },
+  "catalog": {
+    "code": "Kod",
+    "name": "Ad",
+    "description": "Açıklama",
+    "active": "Aktif"
+  }
+}

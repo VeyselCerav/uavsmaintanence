@@ -1,0 +1,748 @@
+{
+  "common": {
+    "appName": "İHA Texniki Xidmət İdarəetmə Sistemi",
+    "save": "Yadda saxla",
+    "cancel": "Ləğv et",
+    "loading": "Yüklənir",
+    "demo": "DEMO",
+    "search": "Axtar",
+    "create": "Əlavə et",
+    "back": "Geri",
+    "actions": "Əməliyyatlar",
+    "edit": "Redaktə et",
+    "delete": "Sil",
+    "viewAll": "Hamısına bax"
+  },
+  "search": {
+    "empty": "Nəticə yoxdur.",
+    "entity": {
+      "uav": "İHA",
+      "component": "Komponent",
+      "work_order": "İş əmri",
+      "maintenance": "Texniki xidmət",
+      "failure": "Nasazlıq",
+      "part": "Hissə"
+    }
+  },
+  "chart": {
+    "fleet": "Donanma vəziyyəti",
+    "dues": "Texniki xidmət müddətləri",
+    "comparison": "Yanaşma müqayisəsi"
+  },
+  "auth": {
+    "login": "Giriş",
+    "email": "E-poçt",
+    "password": "Şifrə",
+    "forgotPassword": "Şifrəni unutdum",
+    "submit": "Daxil ol",
+    "logout": "Çıxış",
+    "resetHint": "E-poçt göndərilmir. İnkişaf mühitində sıfırlama keçidi göstərilir.",
+    "resetSubmit": "Sıfırlama istə",
+    "resetSent": "Hesab varsa sıfırlama hazırlanır. Bu demoda keçid aşağıda görünür.",
+    "resetContinue": "Yeni şifrə təyin et",
+    "resetPassword": "Yeni şifrə",
+    "resetPasswordHint": "Keçiddəki token ilə şifrəni dəyişin.",
+    "newPassword": "Yeni şifrə"
+  },
+  "brand": {
+    "university": "Fırat Universiteti",
+    "program": "Aviasiya Elmi və Texnologiyaları",
+    "degree": "Dissertasiyalı Magistr Proqramı",
+    "student": "Tələbə: Sermet BAYAZİT",
+    "advisor": "Məsləhətçi: Dr. Ukbe Usame UÇAR"
+  },
+  "navigation": {
+    "dashboard": "İcmal",
+    "fleet": "Donanma",
+    "maintenance": "Texniki xidmət",
+    "workOrders": "İş əmrləri",
+    "flights": "Uçuşlar",
+    "failures": "Nasazlıqlar",
+    "fmea": "FMEA",
+    "rcm": "RCM",
+    "parts": "Hissələr",
+    "documents": "Sənədlər",
+    "reliability": "Etibarlılıq",
+    "comparison": "Müqayisə",
+    "reports": "Hesabatlar",
+    "admin": "İdarəetmə mərkəzi"
+  },
+  "dashboard": {
+    "title": "Donanma icmalı",
+    "subtitle": "Vaxtı çatan baxımlar və açıq iş əmrləri.",
+    "placeholder": "Karkas mərhələsi — iş ekranları sonrakı fazalarda əlavə olunacaq.",
+    "dues": "Baxım müddətləri",
+    "workOrders": "Açıq iş əmrləri",
+    "openWorkOrders": "Açıq iş əmri",
+    "emptyDues": "Diqqət tələb edən baxım yoxdur.",
+    "emptyWorkOrders": "Açıq iş əmri yoxdur."
+  },
+  "notifications": {
+    "title": "Bildirişlər",
+    "all": "Hamısı",
+    "empty": "Bildiriş yoxdur.",
+    "markRead": "Oxundu",
+    "markAll": "Hamısını oxundu işarələ",
+    "titles": {
+      "MAINTENANCE_DUE": "Texniki xidmət müddəti çatıb",
+      "MAINTENANCE_OVERDUE": "Texniki xidmət gecikib",
+      "CRITICAL_COMPONENT": "Kritik texniki xidmət eşiği",
+      "MAINTENANCE_APPROACHING": "Texniki xidmət yaxınlaşır",
+      "LOW_STOCK": "Aşağı stok",
+      "WORK_ORDER_ASSIGNED": "İş əmri təyin edildi",
+      "WORK_ORDER_COMPLETED": "İş əmri tamamlandı"
+    },
+    "bodies": {
+      "MAINTENANCE_DUE": "Bir texniki xidmət maddəsi müddət eşiğini keçdi.",
+      "MAINTENANCE_OVERDUE": "Bir texniki xidmət maddəsi gecikmə eşiğini keçdi.",
+      "CRITICAL_COMPONENT": "Bir texniki xidmət maddəsi kritik eşiği keçdi.",
+      "MAINTENANCE_APPROACHING": "Bir texniki xidmət maddəsi yaxınlaşma zolağına girdi.",
+      "LOW_STOCK": "Hissə stoku aşağıdır.",
+      "WORK_ORDER_ASSIGNED": "Sizə iş əmri təyin edildi.",
+      "WORK_ORDER_COMPLETED": "Bir iş əmri tamamlandı."
+    }
+  },
+  "admin": {
+    "title": "Texniki Xidmət İdarəetmə Mərkəzi",
+    "overview": "İcmal",
+    "overviewSubtitle": "Donanma statusu, iş əmri paylanması və gecikmiş baxımlar.",
+    "workOrderDistribution": "İş əmri status paylanması",
+    "overdueTasks": "Gecikmiş tapşırıqlar",
+    "emptyOverdue": "Gecikmiş baxım yoxdur.",
+    "classes": "İHA sinifləri",
+    "platforms": "Platformalar",
+    "missions": "Tapşırıq tipləri",
+    "components": "Komponent növləri",
+    "templates": "Texniki xidmət şablonları",
+    "rules": "Texniki xidmət qaydaları",
+    "technicians": "Texniklər",
+    "skills": "Bacarıqlar",
+    "users": "İstifadəçilər",
+    "settings": "Parametrlər",
+    "audit": "Audit jurnalı"
+  },
+  "errors": {
+    "generic": "Əməliyyat tamamlanmadı.",
+    "network": "Serverə qoşulmaq mümkün olmadı. Yenidən yoxlayın.",
+    "auth": {
+      "invalid_credentials": "E-poçt və ya şifrə yanlışdır.",
+      "invalid_refresh": "Sessiya yenilənmədi.",
+      "token_not_valid": "Sessiya etibarsızdır və ya vaxtı bitib. Yenidən daxil olun.",
+      "invalid_current_password": "Cari şifrə yanlışdır.",
+      "invalid_new_password": "Yeni şifrə qaydalara uyğun deyil.",
+      "invalid_locale": "Dil tr, en və ya az olmalıdır.",
+      "invalid_reset_token": "Sıfırlama keçidi etibarsızdır və ya vaxtı bitib."
+    },
+    "maintenance": {
+      "template_not_found": "Bu sinif, platforma və tapşırıq üçün texniki xidmət şablonu yoxdur.",
+      "resolve_params": "Şablon uyğunlaşması üçün sinif, platforma, tapşırıq və yanaşma tələb olunur.",
+      "invalid_due_rules": "Müddət eşikləri artan sırada olmalıdır (yaxınlaşır < müddəti çatıb < gecikib < kritik)."
+    },
+    "flight": {
+      "counters_already_applied": "Bu uçuşun sayğacları artıq işlənib.",
+      "invalid_interval": "Bitmə vaxtı başlanğıcdan sonra olmalıdır."
+    },
+    "work_order": {
+      "invalid_transition": "Bu status keçidinə icazə verilmir.",
+      "already_open": "Bu müddət maddəsi üçün açıq iş əmri artıq var.",
+      "already_completed": "İş əmri artıq tamamlanıb."
+    },
+    "technician": {
+      "inactive": "Texnik aktiv deyil.",
+      "profile_exists": "Bu istifadəçinin texnik profili artıq var.",
+      "email_taken": "Bu e-poçt ilə istifadəçi artıq qeydiyyatdadır.",
+      "skill_code_taken": "Bu bacarıq kodu artıq qeydiyyatdadır.",
+      "skill_exists": "Bu bacarıq texnikə artıq təyin edilib.",
+      "invalid_dates": "Bitmə tarixi verilmə və ya sertifikat tarixindən əvvəl ola bilməz."
+    },
+    "failure": {
+      "invalid_dates": "Həll vaxtı başvermə vaxtından əvvəl ola bilməz.",
+      "invalid_component": "Seçilmiş komponent bu İHA-ya aid deyil.",
+      "invalid_work_order": "Seçilmiş iş əmri bu İHA-ya aid deyil.",
+      "invalid_downtime": "Dayanma müddəti mənfi ola bilməz.",
+      "mode_code_taken": "Bu nasazlıq rejimi kodu artıq qeydiyyatdadır."
+    },
+    "fmea": {
+      "code_taken": "Bu FMEA kodu artıq qeydiyyatdadır.",
+      "locked": "Təsdiqlənmiş FMEA redaktə edilə bilməz.",
+      "already_approved": "FMEA artıq təsdiqlənib.",
+      "invalid_scores": "Şiddət, başvermə və aşkarlama 1 ilə 10 arasında tam ədəd olmalıdır."
+    },
+    "rcm": {
+      "code_taken": "Bu RCM kodu artıq qeydiyyatdadır.",
+      "locked": "Təsdiqlənmiş RCM redaktə edilə bilməz.",
+      "already_approved": "RCM artıq təsdiqlənib.",
+      "rationale_required": "Qərar ağacı dəyişdiriləndə əsaslandırma tələb olunur.",
+      "not_approved": "Şablona yalnız təsdiqlənmiş RCM köçürülə bilər.",
+      "strategy_conflict": "Maddələr vahid bir strategiyanı paylaşmır."
+    },
+    "reliability": {
+      "invalid_scope": "Əhatə donanma, sinif, İHA və ya komponent olmalıdır.",
+      "invalid_range": "Tarix aralığı etibarsızdır.",
+      "scope_not_found": "Etibarlılıq əhatəsi tapılmadı."
+    },
+    "part": {
+      "number_taken": "Bu hissə nömrəsi artıq qeydiyyatdadır.",
+      "incompatible": "Hissə bu İHA və ya komponentlə uyğun deyil.",
+      "insufficient_stock": "Stok bu çıxarış üçün kifayət etmir.",
+      "invalid_quantity": "Miqdar sıfırdan böyük olmalıdır."
+    },
+    "cost": {
+      "invalid_amount": "Xərc məbləğləri mənfi ola bilməz."
+    },
+    "document": {
+      "target_required": "Sənəd bir İHA, komponent, şablon və ya iş əmrinə bağlanmalıdır.",
+      "file_required": "Fayl yükləyin və ya fayl adı ilə saxlama açarı daxil edin.",
+      "file_too_large": "Fayl 10 MB həddini aşır.",
+      "file_type_invalid": "Bu fayl növünə icazə verilmir.",
+      "file_missing": "Bu qeyd üçün saxlanan fayl yoxdur.",
+      "storage_key_taken": "Bu saxlama açarı artıq istifadə olunur."
+    },
+    "user": {
+      "email_taken": "Bu e-poçt ilə istifadəçi artıq qeydiyyatdadır.",
+      "last_admin": "Son aktiv administrator silinə bilməz."
+    },
+    "settings": {
+      "invalid_value": "Parametr dəyəri yanlışdır."
+    },
+    "report": {
+      "invalid_type": "Naməlum hesabat tipi.",
+      "uav_required": "Bu hesabat üçün İHA seçilməlidir."
+    },
+    "component": {
+      "type_inactive": "Komponent növü aktiv deyil.",
+      "serial_taken": "Bu seriya nömrəsi artıq quraşdırılıb.",
+      "not_installed": "Komponent hazırda quraşdırılmayıb.",
+      "open_work_order": "Sökülməzdən əvvəl açıq iş əmrləri bağlanmalıdır.",
+      "uav_retired": "Inventardan çıxarılmış İHA-da komponent quraşdırılıb sökülə bilməz.",
+      "invalid_dates": "Sökülmə vaxtı quraşdırılma vaxtından əvvəl ola bilməz."
+    }
+  },
+  "uav": {
+    "title": "Donanma",
+    "new": "Yeni İHA",
+    "edit": "İHA-nı redaktə et",
+    "detail": "İHA təfərrüatı",
+    "registration": "Qeydiyyat no",
+    "serial": "Seriya no",
+    "manufacturer": "İstehsalçı",
+    "model": "Model",
+    "class": "Sinif",
+    "platform": "Platforma",
+    "mission": "Tapşırıq tipi",
+    "approach": "Texniki xidmət yanaşması",
+    "template": "Texniki xidmət şablonu",
+    "status": "Status",
+    "mtow": "MTOW (kq)",
+    "productionDate": "İstehsal tarixi",
+    "inventoryDate": "Inventara giriş tarixi",
+    "hours": "Uçuş saatı",
+    "flights": "Uçuş sayı",
+    "cycles": "Dövrə",
+    "notes": "Qeydlər",
+    "general": "Ümumi məlumat",
+    "technical": "Texniki məlumat",
+    "operational": "Əməliyyat məlumatı",
+    "maintenance": "Texniki xidmət məlumatı",
+    "noTemplate": "Şablon bağlanmayıb",
+    "empty": "Qeydə alınmış İHA yoxdur."
+  },
+  "component": {
+    "title": "Quraşdırılmış komponentlər",
+    "install": "Komponent quraşdır",
+    "remove": "Sök",
+    "removed": "Sökülüb",
+    "empty": "Bu İHA-da komponent qeydi yoxdur.",
+    "name": "Ad",
+    "serial": "Seriya no",
+    "hours": "İş saatı",
+    "installedAt": "Quraşdırılma"
+  },
+  "template": {
+    "title": "Texniki xidmət şablonları",
+    "new": "Yeni şablon",
+    "items": "Şablon maddələri",
+    "itemCount": "Maddə",
+    "empty": "Şablon yoxdur.",
+    "noItems": "Bu şablonda maddə yoxdur.",
+    "addItem": "Maddə əlavə et",
+    "taskCode": "Tapşırıq kodu",
+    "taskName": "Tapşırıq adı",
+    "componentType": "Komponent növü",
+    "interval": "Interval",
+    "priority": "Prioritet",
+    "sequence": "Sıra"
+  },
+  "due": {
+    "title": "Növbəti texniki xidmət",
+    "usage": "İstifadə",
+    "remaining": "Qalan",
+    "status": "Müddət",
+    "empty": "Müddət sətri yoxdur. Quraşdırılmış komponent və şablon maddəsi tələb olunur.",
+    "listHint": "Donanmadakı baxım müddətləri.",
+    "listEmpty": "Müddət qeydi yoxdur.",
+    "attention": "Diqqət tələb edənlər",
+    "all": "Hamısı",
+    "list": "Siyahı",
+    "calendar": "Təqvim",
+    "calendarHint": "Yalnız təqvim intervallı baxımlar (gün / ay / il) görünür.",
+    "calendarEmpty": "Bu gündə təqvim müddəti yoxdur.",
+    "today": "Bu gün",
+    "prev": "Əvvəlki",
+    "next": "Növbəti",
+    "views": {
+      "day": "Gün",
+      "week": "Həftə",
+      "month": "Ay"
+    },
+    "weekday": {
+      "1": "B.e.",
+      "2": "Ç.a.",
+      "3": "Ç.",
+      "4": "C.a.",
+      "5": "C.",
+      "6": "Ş.",
+      "7": "B."
+    }
+  },
+  "record": {
+    "title": "Baxım qeydləri",
+    "hint": "Tamamlanmış iş əmrlərindən yaranan baxım tarixçəsi.",
+    "empty": "Baxım qeydi yoxdur.",
+    "performedAt": "İcra"
+  },
+  "dueRules": {
+    "hint": "Eşiklər şablon intervalının neçə faizinin istifadə olunduğuna görə müddət statusunu təyin edir.",
+    "approaching": "Yaxınlaşır eşiği (%)",
+    "due": "Müddəti çatıb eşiği (%)",
+    "overdue": "Gecikib eşiği (%)",
+    "critical": "Kritik eşiği (%)",
+    "orderHint": "Dəyərlər artan sırada olmalıdır.",
+    "autoCreate": "Müddət çatanda avtomatik iş əmri aç",
+    "autoCreateHint": "Açıqdırsa DUE, OVERDUE və CRITICAL sətirləri üçün OPEN iş əmri yaradılır. Eyni maddə üçün ikinci açıq iş əmri açılmır.",
+    "saved": "Qaydalar yadda saxlandı. Müddətlər yenidən hesablandı."
+  },
+  "flight": {
+    "title": "Uçuşlar",
+    "new": "Yeni uçuş",
+    "number": "Uçuş no",
+    "flownOn": "Tarix",
+    "start": "Başlanğıc",
+    "end": "Bitmə",
+    "duration": "Müddət (saat)",
+    "durationOverride": "Müddət (istəyə bağlı)",
+    "durationHint": "Boş buraxılsa başlanğıc–bitmədən hesablanır",
+    "result": "Nəticə",
+    "counters": "Sayğac",
+    "applied": "İşlənib",
+    "pending": "Gözləyir",
+    "complete": "Uçuşu tamamla",
+    "operator": "Operator",
+    "empty": "Uçuş qeydi yoxdur.",
+    "demoNote": "DEMO DATA — rəsmi texniki xidmət standartı deyil."
+  },
+  "workOrder": {
+    "title": "İş əmrləri",
+    "new": "Yeni iş əmri",
+    "openTitle": "Açıq iş əmrləri",
+    "openFromDue": "İş əmri aç",
+    "number": "İş əmri no",
+    "status": "Status",
+    "assignee": "Təyin edilən",
+    "assign": "Təyin et",
+    "start": "Başlat",
+    "waitingParts": "Hissə gözləyir",
+    "complete": "Tamamla",
+    "cancel": "Ləğv et",
+    "findings": "Tapıntılar",
+    "type": "Texniki xidmət tipi",
+    "empty": "İş əmri yoxdur."
+  },
+  "failure": {
+    "title": "Nasazlıqlar",
+    "new": "Yeni nasazlıq",
+    "hint": "İHA nasazlıq hadisələri. Müddət faizi burada hesablanmır.",
+    "empty": "Nasazlıq qeydi yoxdur.",
+    "occurredAt": "Başvermə vaxtı",
+    "discovered": "Aşkarlanma",
+    "severity": "Şiddət",
+    "mode": "Nasazlıq rejimi",
+    "modeNone": "Seçilməyib",
+    "description": "Təsvir",
+    "downtime": "Dayanma (saat)",
+    "resolvedAt": "Həll vaxtı",
+    "resolve": "Həll olundu işarələ",
+    "open": "Açıq",
+    "resolved": "Həll olunub",
+    "all": "Hamısı",
+    "status": "Status",
+    "component": "Komponent",
+    "demoNote": "DEMO DATA — rəsmi texniki xidmət standartı deyil."
+  },
+  "fmea": {
+    "title": "FMEA",
+    "new": "Yeni FMEA",
+    "hint": "Sinif × platforma × komponent növü əhatəsi. RPN serverdə S × O × D kimi hesablanır.",
+    "empty": "FMEA qeydi yoxdur.",
+    "emptyItems": "Maddə yoxdur.",
+    "titleField": "Analiz adı",
+    "allMissions": "Bütün tapşırıqlar",
+    "status": "Status",
+    "revision": "Reviziya",
+    "approve": "Təsdiqlə",
+    "items": "Maddələr",
+    "addItem": "Maddə əlavə et",
+    "function": "Funksiya",
+    "functionalFailure": "Funksional nasazlıq",
+    "failureModeText": "Nasazlıq təsviri",
+    "cause": "Səbəb",
+    "effect": "Təsir",
+    "rpnHint": "RPN brauzerdə hesablanmır; S × O × D yadda saxlandıqdan sonra görünür."
+  },
+  "rcm": {
+    "title": "RCM",
+    "new": "Yeni RCM",
+    "hint": "Sinif × platforma × komponent növü əhatəsi. Strategiya qərar ağacı serverdə hesablanır.",
+    "empty": "RCM qeydi yoxdur.",
+    "emptyItems": "Maddə yoxdur.",
+    "titleField": "Analiz adı",
+    "allMissions": "Bütün tapşırıqlar",
+    "status": "Status",
+    "revision": "Reviziya",
+    "approve": "Təsdiqlə",
+    "evaluate": "Yenidən qiymətləndir",
+    "applyToTemplate": "Şablona köçür",
+    "applyResult": "{count} şablon maddəsi {strategy} olaraq yeniləndi.",
+    "items": "Maddələr",
+    "addItem": "Maddə əlavə et",
+    "function": "Funksiya",
+    "functionalFailure": "Funksional nasazlıq",
+    "failureModeText": "Nasazlıq təsviri",
+    "effect": "Təsir",
+    "safetyEffect": "Təhlükəsizlik təsiri",
+    "operationalEffect": "Əməliyyat təsiri",
+    "preventiveFeasible": "Preventiv xidmət mümkündür",
+    "detectability": "Aşkarlanma",
+    "strategy": "Strategiya",
+    "suggested": "Tövsiyə",
+    "strategyOverride": "Strategiya (əl ilə)",
+    "useTree": "Qərar ağacını istifadə et",
+    "rationale": "Əsaslandırma",
+    "overridden": "Əl ilə",
+    "groundedWarning": "Təhlükəsizlik təsiri var, preventiv seçim yoxdur — yerə çəkmə xəbərdarlığı",
+    "mixedStrategy": "Qarışıq",
+    "fmeaItem": "FMEA maddəsi",
+    "fmeaItemNone": "Bağlantı yoxdur",
+    "yes": "Bəli",
+    "no": "Xeyr",
+    "treeHint": "Strategiya brauzerdə hesablanmır; server nəticəsi yadda saxlandıqdan sonra görünür. Əl ilə seçimdə əsaslandırma tələb olunur."
+  },
+  "reliability": {
+    "title": "Etibarlılıq",
+    "hint": "MTBF, MTTR və Availability serverdə hesablanır. Sıfır nasazlıqda MTBF təyin olunmur.",
+    "mtbf": "MTBF (saat)",
+    "mttr": "MTTR (saat)",
+    "availability": "Availability",
+    "failures": "Nasazlıq sayı",
+    "repairs": "Təmir sayı",
+    "operating": "İş müddəti",
+    "fleet": "Donanma",
+    "lowerBound": "Sıfır nasazlıq — iş müddəti alt sərhəd kimi göstərildi"
+  },
+  "comparison": {
+    "title": "Texniki xidmət yanaşmasının müqayisəsi",
+    "hint": "STANDARD və CLASS_SPECIFIC eyni donanmada yan-yana ölçülür. MTBF, müddət və xərc brauzerdə hesablanmır.",
+    "metric": "Göstərici",
+    "uavs": "İHA sayı",
+    "templates": "Şablon sayı",
+    "templateItems": "Tapşırıq maddəsi",
+    "dueAttention": "Diqqət tələb edən müddət",
+    "dueOverdue": "Gecikmiş müddət",
+    "openWorkOrders": "Açıq iş əmri",
+    "allMissions": "Bütün tapşırıqlar"
+  },
+  "part": {
+    "title": "Hissələr",
+    "new": "Yeni hissə",
+    "hint": "Stok və sinif × platforma uyğunluğu.",
+    "empty": "Hissə qeydi yoxdur.",
+    "number": "Hissə no",
+    "stock": "Stok",
+    "minStock": "Min. stok",
+    "unitCost": "Vahid dəyəri",
+    "currency": "Valyuta",
+    "supplier": "Təchizatçı",
+    "location": "Yer",
+    "status": "Status",
+    "lowStock": "Aşağı stok",
+    "compatibility": "Uyğunluq",
+    "emptyCompatibility": "Uyğunluq qeydi yoxdur.",
+    "addCompatibility": "Uyğunluq əlavə et",
+    "allClasses": "Bütün siniflər",
+    "allPlatforms": "Bütün platformalar",
+    "qty": "Miqdar",
+    "select": "Hissə seç",
+    "issue": "İş əmrinə çıxar",
+    "emptyLines": "Bu iş əmrində hissə yoxdur."
+  },
+  "cost": {
+    "title": "Xərc",
+    "empty": "Xərc qeydi yoxdur.",
+    "occurredAt": "Tarih",
+    "part": "Hissə",
+    "labor": "Əmək",
+    "other": "Digər",
+    "total": "Cəmi"
+  },
+  "document": {
+    "title": "Sənədlər",
+    "new": "Yeni sənəd",
+    "hint": "PDF, şəkil və ofis faylları yüklənə bilər (ən çox 10 MB).",
+    "empty": "Sənəd qeydi yoxdur.",
+    "titleField": "Başlıq",
+    "fileName": "Fayl adı",
+    "storageKey": "Saxlama açarı",
+    "type": "Növ",
+    "contentType": "Məzmun tipi",
+    "noTarget": "Seçilməyib",
+    "storageHint": "Fayl seçiləndə saxlama açarı avtomatik yaranır. Köhnə demo qeydlərində fayl olmaya bilər.",
+    "upload": "Fayl",
+    "download": "Endir",
+    "noFile": "Fayl yoxdur"
+  },
+  "timeline": {
+    "title": "Hadisə tarixçəsi",
+    "empty": "Hadisə yoxdur.",
+    "occurredAt": "Vaxt",
+    "event": "Hadisə",
+    "detail": "Təfərrüat",
+    "UAV_CREATED": "İHA yaradıldı",
+    "COMPONENT_INSTALLED": "Komponent quraşdırıldı",
+    "COMPONENT_REMOVED": "Komponent çıxarıldı",
+    "FLIGHT": "Uçuş",
+    "WORK_ORDER": "İş əmri",
+    "MAINTENANCE": "Texniki xidmət qeydi",
+    "FAILURE": "Nasazlıq",
+    "DOCUMENT": "Sənəd"
+  },
+  "user": {
+    "hint": "Yalnız administrator istifadəçi yarada və rol tapa bilər.",
+    "role": "Rol",
+    "active": "Status",
+    "activeYes": "Aktiv",
+    "activeNo": "Passiv",
+    "empty": "İstifadəçi yoxdur."
+  },
+  "settings": {
+    "hint": "Sistem hədləri serverdə saxlanılır. Xam JSON burada redaktə edilmir.",
+    "saved": "Parametrlər yadda saxlanıldı.",
+    "rpn": "RPN hədləri",
+    "rpnLow": "Aşağı yuxarı hədd",
+    "rpnMedium": "Orta yuxarı hədd",
+    "rpnHigh": "Yüksək yuxarı hədd",
+    "zeroFailure": "Sıfır nasazlıq siyasəti",
+    "zeroUndefined": "Təyin olunmayıb (MTBF boş)",
+    "zeroLowerBound": "İş vaxtı alt hədd kimi"
+  },
+  "audit": {
+    "hint": "Dəyişiklik qeydləri silinə bilməz.",
+    "empty": "Audit qeydi yoxdur.",
+    "timestamp": "Vaxt",
+    "user": "İstifadəçi",
+    "action": "Əməliyyat",
+    "entity": "Obyekt",
+    "message": "Mesaj"
+  },
+  "report": {
+    "title": "Hesabatlar",
+    "hint": "PDF və Excel serverdə yaradılır. Vade faizi və ya RPN brauzerdə hesablanmır.",
+    "pdf": "PDF",
+    "xlsx": "Excel",
+    "downloadPdf": "PDF yüklə",
+    "downloadXlsx": "Excel yüklə",
+    "from": "Başlanğıc",
+    "to": "Bitmə",
+    "allUavs": "Bütün donanma",
+    "exportDenied": "İxrac icazəniz yoxdur; hesabatı yalnız görə bilərsiniz.",
+    "types": {
+      "uav-history": "İHA tarixçəsi",
+      "maintenance": "Texniki xidmət qeydləri",
+      "work-order": "İş əmrləri",
+      "failure": "Nasazlıqlar",
+      "fmea": "FMEA",
+      "rcm": "RCM",
+      "fleet": "Donanma",
+      "reliability": "Etibarlılıq",
+      "cost": "Xərc",
+      "approach-comparison": "STANDARD vs CLASS_SPECIFIC",
+      "uavs": "İHA siyahısı",
+      "components": "Komponentlər",
+      "flights": "Uçuşlar",
+      "failures": "Nasazlıqlar",
+      "costs": "Xərclər"
+    }
+  },
+  "profile": {
+    "title": "Profil",
+    "hint": "Ad, dil və şifrə. Dil hesabınıza yazılır.",
+    "language": "Dil",
+    "password": "Şifrəni dəyiş",
+    "currentPassword": "Cari şifrə",
+    "newPassword": "Yeni şifrə",
+    "saved": "Profil yadda saxlanıldı."
+  },
+  "technician": {
+    "employeeNumber": "Sicil no",
+    "fullName": "Ad soyad",
+    "status": "Status",
+    "empty": "Texnik profili yoxdur.",
+    "activate": "Aktiv et",
+    "deactivate": "Passiv et",
+    "skills": "Bacarıqlar",
+    "skill": "Bacarıq",
+    "addSkill": "Bacarıq əlavə et",
+    "noSkills": "Təyin edilmiş bacarıq yoxdur.",
+    "certifications": "Sertifikatlar",
+    "addCertification": "Sertifikat əlavə et",
+    "noCertifications": "Sertifikat qeydi yoxdur.",
+    "issuer": "Verən qurum",
+    "certifiedAt": "Təsdiq",
+    "issuedAt": "Verilmə",
+    "expiresAt": "Bitmə",
+    "documentId": "Sənəd no"
+  },
+  "enums": {
+    "uav_status": {
+      "READY": "Hazır",
+      "MAINTENANCE": "Texniki xidmətdə",
+      "GROUNDED": "Yerə çəkilib",
+      "RETIRED": "Inventardan çıxarılıb"
+    },
+    "component_status": {
+      "INSTALLED": "Quraşdırılıb",
+      "REMOVED": "Sökülüb",
+      "QUARANTINE": "Karantin",
+      "SCRAPPED": "Hurda"
+    },
+    "maintenance_approach": {
+      "STANDARD": "Standart texniki xidmət",
+      "CLASS_SPECIFIC": "Sinifə xüsusi texniki xidmət"
+    },
+    "due_status": {
+      "NORMAL": "Normal",
+      "APPROACHING": "Yaxınlaşır",
+      "DUE": "Müddəti çatıb",
+      "OVERDUE": "Gecikib",
+      "CRITICAL": "Kritik"
+    },
+    "priority": {
+      "LOW": "Aşağı",
+      "MEDIUM": "Orta",
+      "HIGH": "Yüksək",
+      "CRITICAL": "Kritik"
+    },
+    "interval_unit": {
+      "FLIGHT_HOURS": "uçuş saatı",
+      "FLIGHT_CYCLES": "uçuş dövrəsi",
+      "COMPONENT_CYCLES": "komponent dövrəsi",
+      "CALENDAR_DAYS": "gün",
+      "CALENDAR_MONTHS": "ay",
+      "CALENDAR_YEARS": "il"
+    },
+    "inspection_type": {
+      "VISUAL": "Vizual",
+      "FUNCTIONAL": "Funksional",
+      "MEASUREMENT": "Ölçmə",
+      "OVERHAUL": "Kapital təmir",
+      "REPLACEMENT": "Əvəzetmə",
+      "LUBRICATION": "Yağlama",
+      "SOFTWARE": "Proqram"
+    },
+    "rcm_strategy": {
+      "SCHEDULED_INSPECTION": "Planlı yoxlama",
+      "SCHEDULED_RESTORATION": "Planlı bərpa",
+      "SCHEDULED_DISCARD": "Planlı silinmə",
+      "CONDITION_INSPECTION": "Vəziyyət yoxlaması",
+      "FUNCTIONAL_CHECK": "Funksional yoxlama",
+      "CORRECTIVE": "Düzəldici"
+    },
+    "flight_result": {
+      "COMPLETED": "Tamamlandı",
+      "ABORTED": "Yarımçıq",
+      "TRAINING": "Təlim"
+    },
+    "work_order_status": {
+      "OPEN": "Açıq",
+      "ASSIGNED": "Təyin edilib",
+      "IN_PROGRESS": "Davam edir",
+      "WAITING_PARTS": "Hissə gözləyir",
+      "COMPLETED": "Tamamlandı",
+      "CANCELLED": "Ləğv"
+    },
+    "maintenance_type": {
+      "PREVENTIVE": "Qabaqlayıcı",
+      "CORRECTIVE": "Düzəldici",
+      "SCHEDULED": "Planlı",
+      "UNSCHEDULED": "Plansız",
+      "INSPECTION": "Yoxlama",
+      "FUNCTIONAL_CHECK": "Funksional yoxlama"
+    },
+    "technician_status": {
+      "ACTIVE": "Aktiv",
+      "INACTIVE": "Passiv"
+    },
+    "discovered_during": {
+      "FLIGHT": "Uçuş",
+      "INSPECTION": "Yoxlama",
+      "MAINTENANCE": "Texniki xidmət",
+      "OTHER": "Digər"
+    },
+    "failure_severity": {
+      "LOW": "Aşağı",
+      "MEDIUM": "Orta",
+      "HIGH": "Yüksək",
+      "CRITICAL": "Kritik"
+    },
+    "fmea_status": {
+      "DRAFT": "Qaralama",
+      "IN_REVIEW": "İnceləmədə",
+      "APPROVED": "Təsdiqlənib",
+      "ARCHIVED": "Arxiv"
+    },
+    "rcm_status": {
+      "DRAFT": "Qaralama",
+      "IN_REVIEW": "İnceləmədə",
+      "APPROVED": "Təsdiqlənib",
+      "ARCHIVED": "Arxiv"
+    },
+    "detectability": {
+      "LOW": "Aşağı",
+      "MEDIUM": "Orta",
+      "HIGH": "Yüksək"
+    },
+    "part_status": {
+      "ACTIVE": "Aktiv",
+      "INACTIVE": "Passiv"
+    },
+    "rpn_band": {
+      "LOW": "Aşağı",
+      "MEDIUM": "Orta",
+      "HIGH": "Yüksək",
+      "CRITICAL": "Kritik"
+    },
+    "document_type": {
+      "MANUAL": "Əl kitabı",
+      "PROCEDURE": "Prosedur",
+      "CERTIFICATE": "Sertifikat",
+      "PHOTO": "Foto",
+      "REPORT": "Hesabat",
+      "OTHER": "Digər"
+    }
+  },
+  "catalog": {
+    "code": "Kod",
+    "name": "Ad",
+    "description": "Təsvir",
+    "active": "Aktiv"
+  }
+}
