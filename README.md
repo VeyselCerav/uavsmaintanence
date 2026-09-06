@@ -3,7 +3,7 @@
 Sınıf, platform ve görev tipine özgü İHA bakım yönetim sistemi. Yüksek lisans tezi. **Yapay zekâ / ML / LLM kullanılmaz.**
 
 - Mimari: [docs/architecture/README.md](docs/architecture/README.md)
-- **Kullanım rehberi (teknisyen & admin):** [Kullanım Rehberi.md](Kullanım%20Rehberi.md)
+- **Kullanım rehberi:** [Yönetici](docs/kullanim-kilavuzu-yonetici.md) · [Teknisyen](docs/kullanim-kilavuzu-teknisyen.md) · [özet](Kullanım%20Rehberi.md)
 - **Ücretsiz canlı yayın:** [docs/CANLI-YAYIN.md](docs/CANLI-YAYIN.md) — repo: [github.com/VeyselCerav/uavsmaintanence](https://github.com/VeyselCerav/uavsmaintanence)
 
 ## Akademik amaç

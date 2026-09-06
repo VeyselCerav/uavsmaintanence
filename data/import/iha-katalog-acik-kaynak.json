@@ -1,0 +1,372 @@
+{
+  "meta": {
+    "title": "Açık kaynak İHA kataloğu — programa aktarım taslağı",
+    "created_at": "2026-09-06",
+    "purpose": "Filo kaydı için kamuya açık üretici/Wikipedia verisi. seed_fleet bu dosyayı yükler.",
+    "disclaimer": "DEMO / akademik derleme. Resmi bakım standardı, üretici AMM/CMM aralığı veya askeri teknik emir değildir. Bakım interval önerileri yalnızca mevcut şablon motorunu doldurmak içindir.",
+    "target_schema": {
+      "uav_fields": [
+        "registration_number",
+        "serial_number",
+        "manufacturer",
+        "model",
+        "uav_class_code",
+        "platform_type_code",
+        "mission_type_code",
+        "maintenance_approach",
+        "mtow_kg",
+        "status",
+        "notes",
+        "is_demo"
+      ],
+      "class_bands_kg": {
+        "VERY_LIGHT": { "mtow_min_kg": "0", "mtow_max_kg": "2" },
+        "LIGHT": { "mtow_min_kg": "2", "mtow_max_kg": "25" },
+        "MEDIUM": { "mtow_min_kg": "25", "mtow_max_kg": "150" },
+        "HEAVY": { "mtow_min_kg": "150", "mtow_max_kg": "800" }
+      }
+    }
+  },
+  "catalog": {
+    "uav_classes": [
+      { "code": "VERY_LIGHT", "name": "Çok hafif", "mtow_min_kg": "0.00", "mtow_max_kg": "2.00", "sort_order": 0 },
+      { "code": "LIGHT", "name": "Hafif", "mtow_min_kg": "2.00", "mtow_max_kg": "25.00", "sort_order": 1 },
+      { "code": "MEDIUM", "name": "Orta", "mtow_min_kg": "25.00", "mtow_max_kg": "150.00", "sort_order": 2 },
+      { "code": "HEAVY", "name": "Ağır", "mtow_min_kg": "150.00", "mtow_max_kg": "800.00", "sort_order": 3 }
+    ],
+    "platform_types": [
+      { "code": "FIXED_WING", "name": "Sabit kanat" },
+      { "code": "MULTICOPTER", "name": "Çok rotorlu" },
+      { "code": "VTOL", "name": "VTOL" },
+      { "code": "ROTARY_WING", "name": "Döner kanat (helikopter tipi)" }
+    ],
+    "mission_types": [
+      { "code": "MAPPING", "name": "Haritalama" },
+      { "code": "SURVEILLANCE", "name": "Gözetleme" },
+      { "code": "INSPECTION", "name": "Muayene / altyapı" },
+      { "code": "AGRICULTURE", "name": "Tarım" },
+      { "code": "SAR", "name": "Arama kurtarma" },
+      { "code": "ISR", "name": "İstihbarat / keşif" }
+    ],
+    "component_types": [
+      { "code": "AIRFRAME", "name": "Gövde", "tracks_hours": true, "tracks_cycles": false },
+      { "code": "PROPULSION", "name": "İtki", "tracks_hours": true, "tracks_cycles": true },
+      { "code": "AVIONICS", "name": "Aviyonik", "tracks_hours": true, "tracks_cycles": false },
+      { "code": "BATTERY", "name": "Batarya", "tracks_hours": true, "tracks_cycles": true },
+      { "code": "PAYLOAD", "name": "Faydalı yük", "tracks_hours": false, "tracks_cycles": false },
+      { "code": "FUEL_SYSTEM", "name": "Yakıt sistemi", "tracks_hours": true, "tracks_cycles": false }
+    ]
+  },
+  "uavs": [
+    {
+      "suggested_registration": "TR-PUB-001",
+      "serial_number": "SN-EBEE-X-001",
+      "manufacturer": "senseFly / AgEagle",
+      "model": "eBee X",
+      "uav_class_code": "VERY_LIGHT",
+      "platform_type_code": "FIXED_WING",
+      "mission_type_code": "MAPPING",
+      "maintenance_approach": "CLASS_SPECIFIC",
+      "mtow_kg": "1.60",
+      "endurance_minutes": 90,
+      "wingspan_m": "1.16",
+      "status": "READY",
+      "fits_current_class_bands": true,
+      "is_demo": true,
+      "sources": [
+        "https://eaglenxt.com/products/drones/ebee-series/ebee-x/"
+      ],
+      "notes": "Kamuya açık MTOW 1,6 kg; dayanım 90 dk (endurance batarya). VERY_LIGHT bandına uyar."
+    },
+    {
+      "suggested_registration": "TR-PUB-002",
+      "serial_number": "SN-RAVEN-001",
+      "manufacturer": "AeroVironment",
+      "model": "RQ-11B Raven",
+      "uav_class_code": "VERY_LIGHT",
+      "platform_type_code": "FIXED_WING",
+      "mission_type_code": "SURVEILLANCE",
+      "maintenance_approach": "CLASS_SPECIFIC",
+      "mtow_kg": "1.90",
+      "endurance_minutes": 75,
+      "wingspan_m": "1.40",
+      "status": "READY",
+      "fits_current_class_bands": true,
+      "is_demo": true,
+      "sources": [
+        "https://en.wikipedia.org/wiki/AeroVironment_RQ-11_Raven",
+        "https://www.avinc.com/wp/wp-content/uploads/2026/03/2025_Raven_Datasheet_251030_v02.pdf"
+      ],
+      "notes": "Wikipedia ~1,9 kg; üretici güncel föy ~2,2 kg. 2 kg sınıra yakın; VERY_LIGHT üst sınır 2,00 kg. Aktarımda 1,90 kullanılabilir veya LIGHT’a alınabilir."
+    },
+    {
+      "suggested_registration": "TR-PUB-003",
+      "serial_number": "SN-MINI-BAY-001",
+      "manufacturer": "Baykar",
+      "model": "Bayraktar Mini UAV",
+      "uav_class_code": "LIGHT",
+      "platform_type_code": "FIXED_WING",
+      "mission_type_code": "SURVEILLANCE",
+      "maintenance_approach": "CLASS_SPECIFIC",
+      "mtow_kg": "5.80",
+      "endurance_minutes": 100,
+      "wingspan_m": "2.45",
+      "status": "READY",
+      "fits_current_class_bands": true,
+      "is_demo": true,
+      "sources": [
+        "https://www.baykartech.com/en/uav/bayraktar-mini-iha/"
+      ],
+      "notes": "Üretici MTOW 5,8 kg, dayanım 100 dk, el ile fırlatma."
+    },
+    {
+      "suggested_registration": "TR-PUB-004",
+      "serial_number": "SN-PUMA-001",
+      "manufacturer": "AeroVironment",
+      "model": "RQ-20 Puma AE",
+      "uav_class_code": "LIGHT",
+      "platform_type_code": "FIXED_WING",
+      "mission_type_code": "SURVEILLANCE",
+      "maintenance_approach": "STANDARD",
+      "mtow_kg": "6.30",
+      "endurance_minutes": 180,
+      "wingspan_m": "2.80",
+      "status": "READY",
+      "fits_current_class_bands": true,
+      "is_demo": true,
+      "sources": [
+        "https://www.naval-technology.com/projects/rq-20b-puma-ae-small-unmanned-aircraft-system-uas/"
+      ],
+      "notes": "Yaklaşık 6,3 kg; dayanım 3+ saat. STANDARD yaklaşım (Bayraktar Mini ile LIGHT/FW/SURVEILLANCE karşılaştırması)."
+    },
+    {
+      "suggested_registration": "TR-PUB-005",
+      "serial_number": "SN-WINGTRA-001",
+      "manufacturer": "Wingtra",
+      "model": "WingtraOne GEN II",
+      "uav_class_code": "LIGHT",
+      "platform_type_code": "VTOL",
+      "mission_type_code": "MAPPING",
+      "maintenance_approach": "CLASS_SPECIFIC",
+      "mtow_kg": "4.80",
+      "endurance_minutes": 59,
+      "wingspan_m": "1.25",
+      "payload_kg": "0.80",
+      "status": "READY",
+      "fits_current_class_bands": true,
+      "is_demo": true,
+      "sources": [
+        "https://wingtra.com/wingtraone-gen-ii-drone/",
+        "https://wingtra.com/wp-content/uploads/Wingtra-Technical-Specifications.pdf"
+      ],
+      "notes": "Tailsitter VTOL. Güncel föy MTOW 4,8 kg; bazı eski broşürler 4,5 kg yazar."
+    },
+    {
+      "suggested_registration": "TR-PUB-006",
+      "serial_number": "SN-TRINITY-001",
+      "manufacturer": "Quantum-Systems",
+      "model": "Trinity F90+",
+      "uav_class_code": "LIGHT",
+      "platform_type_code": "VTOL",
+      "mission_type_code": "MAPPING",
+      "maintenance_approach": "CLASS_SPECIFIC",
+      "mtow_kg": "5.00",
+      "endurance_minutes": 90,
+      "wingspan_m": "2.394",
+      "status": "READY",
+      "fits_current_class_bands": true,
+      "is_demo": true,
+      "sources": [
+        "https://quantum-systems.com/wp-content/uploads/2023/01/QS_TrinityF90_Overview_220912.pdf"
+      ],
+      "notes": "eVTOL haritalama. MTOW 5,0 kg; kilit açılınca 90+ dk."
+    },
+    {
+      "suggested_registration": "TR-PUB-007",
+      "serial_number": "SN-M350-001",
+      "manufacturer": "DJI",
+      "model": "Matrice 350 RTK",
+      "uav_class_code": "LIGHT",
+      "platform_type_code": "MULTICOPTER",
+      "mission_type_code": "INSPECTION",
+      "maintenance_approach": "CLASS_SPECIFIC",
+      "mtow_kg": "9.20",
+      "endurance_minutes": 55,
+      "payload_kg": "2.70",
+      "empty_weight_kg": "6.47",
+      "status": "READY",
+      "fits_current_class_bands": true,
+      "is_demo": true,
+      "sources": [
+        "https://enterprise.dji.com/matrice-350-rtk/specs"
+      ],
+      "notes": "İki TB65 ile ~6,47 kg; MTOW 9,2 kg. Batarya çevrimi üreticide 400 çevrim olarak geçer (programda COMPONENT_CYCLES)."
+    },
+    {
+      "suggested_registration": "TR-PUB-008",
+      "serial_number": "SN-AGRAS-T40-001",
+      "manufacturer": "DJI",
+      "model": "Agras T40",
+      "uav_class_code": "MEDIUM",
+      "platform_type_code": "MULTICOPTER",
+      "mission_type_code": "AGRICULTURE",
+      "maintenance_approach": "CLASS_SPECIFIC",
+      "mtow_kg": "90.00",
+      "endurance_minutes": 18,
+      "empty_weight_kg": "50.00",
+      "status": "READY",
+      "fits_current_class_bands": true,
+      "is_demo": true,
+      "sources": [
+        "https://www.dji.com/t40/specs"
+      ],
+      "notes": "Bataryalı boş ~50 kg. İlaçlama MTOW 90 kg, serpme 101 kg (deniz seviyesi). 101 kg hâlâ MEDIUM (≤150)."
+    },
+    {
+      "suggested_registration": "TR-PUB-009",
+      "serial_number": "SN-INTEGRATOR-001",
+      "manufacturer": "Insitu (Boeing)",
+      "model": "Integrator",
+      "uav_class_code": "MEDIUM",
+      "platform_type_code": "FIXED_WING",
+      "mission_type_code": "ISR",
+      "maintenance_approach": "CLASS_SPECIFIC",
+      "mtow_kg": "79.00",
+      "endurance_hours": 27.5,
+      "wingspan_m": "4.90",
+      "payload_kg": "23.00",
+      "status": "READY",
+      "fits_current_class_bands": true,
+      "is_demo": true,
+      "sources": [
+        "https://www.insitu.com/products/integrator"
+      ],
+      "notes": "Üretici MTOW 175 lb / 79 kg. İçten yanmalı; komponent listesine FUEL_SYSTEM eklenebilir."
+    },
+    {
+      "suggested_registration": "TR-PUB-010",
+      "serial_number": "SN-S100-001",
+      "manufacturer": "Schiebel",
+      "model": "Camcopter S-100",
+      "uav_class_code": "HEAVY",
+      "platform_type_code": "ROTARY_WING",
+      "mission_type_code": "SURVEILLANCE",
+      "maintenance_approach": "CLASS_SPECIFIC",
+      "mtow_kg": "200.00",
+      "endurance_hours": 6,
+      "empty_weight_kg": "110.00",
+      "payload_kg": "50.00",
+      "status": "READY",
+      "fits_current_class_bands": true,
+      "is_demo": true,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Schiebel_Camcopter_S-100"
+      ],
+      "notes": "MTOW 200 kg HEAVY bandına uyar. Döner kanat platformu ROTARY_WING olarak katalogda."
+    },
+    {
+      "suggested_registration": "TR-PUB-011",
+      "serial_number": "SN-TB2-001",
+      "manufacturer": "Baykar",
+      "model": "Bayraktar TB2",
+      "uav_class_code": "HEAVY",
+      "platform_type_code": "FIXED_WING",
+      "mission_type_code": "ISR",
+      "maintenance_approach": "CLASS_SPECIFIC",
+      "mtow_kg": "700.00",
+      "endurance_hours": 20,
+      "wingspan_m": "12.00",
+      "payload_kg": "150.00",
+      "status": "READY",
+      "fits_current_class_bands": true,
+      "is_demo": true,
+      "sources": [
+        "https://baykartech.com/en/uav/bayraktar-tb2/",
+        "https://en.wikipedia.org/wiki/Baykar_Bayraktar_TB2"
+      ],
+      "notes": "Üretici/Wikipedia MTOW 700 kg. HEAVY üst sınırı 800 kg olarak genişletildi."
+    }
+  ],
+  "suggested_installed_components": [
+    {
+      "component_type_code": "AIRFRAME",
+      "name_suffix": "Gövde",
+      "tracks": "operating_hours"
+    },
+    {
+      "component_type_code": "PROPULSION",
+      "name_suffix": "İtki",
+      "tracks": "operating_hours_and_cycles"
+    },
+    {
+      "component_type_code": "AVIONICS",
+      "name_suffix": "Aviyonik",
+      "tracks": "operating_hours"
+    },
+    {
+      "component_type_code": "BATTERY",
+      "name_suffix": "Batarya",
+      "applies_if": "electric_or_hybrid",
+      "tracks": "component_cycles"
+    },
+    {
+      "component_type_code": "PAYLOAD",
+      "name_suffix": "Faydalı yük",
+      "tracks": "optional"
+    },
+    {
+      "component_type_code": "FUEL_SYSTEM",
+      "name_suffix": "Yakıt",
+      "applies_if": "internal_combustion",
+      "tracks": "operating_hours"
+    }
+  ],
+  "suggested_demo_template_items": {
+    "warning": "Resmi periyot değildir. Mevcut seed şablon kalemleriyle aynı motoru kullanmak içindir.",
+    "class_specific": [
+      {
+        "component_type_code": "AIRFRAME",
+        "task_code": "AF-VIS-050",
+        "task_name": "Gövde görsel muayene",
+        "interval_value": "50",
+        "interval_unit": "FLIGHT_HOURS",
+        "priority": "MEDIUM",
+        "inspection_type": "VISUAL"
+      },
+      {
+        "component_type_code": "PROPULSION",
+        "task_code": "PR-VIS-025",
+        "task_name": "İtki görsel muayene",
+        "interval_value": "25",
+        "interval_unit": "FLIGHT_HOURS",
+        "priority": "HIGH",
+        "inspection_type": "VISUAL"
+      },
+      {
+        "component_type_code": "BATTERY",
+        "task_code": "BT-CYC-100",
+        "task_name": "Batarya çevrim kontrolü",
+        "interval_value": "100",
+        "interval_unit": "COMPONENT_CYCLES",
+        "priority": "MEDIUM",
+        "inspection_type": "FUNCTIONAL"
+      },
+      {
+        "component_type_code": "PAYLOAD",
+        "task_code": "PL-CAL-090",
+        "task_name": "Yük takvimli muayene",
+        "interval_value": "90",
+        "interval_unit": "CALENDAR_DAYS",
+        "priority": "LOW",
+        "inspection_type": "FUNCTIONAL"
+      }
+    ]
+  },
+  "import_notes": [
+    "Kayıt numaraları TR-PUB-* . Eski TR-UAV-001…006 seed_fleet ile silinir.",
+    "ROTARY_WING, AGRICULTURE ve ISR katalogda oluşturulur.",
+    "TB2 700 kg; HEAVY üst sınırı 800 kg.",
+    "RQ-20 Puma AE STANDARD; Bayraktar Mini CLASS_SPECIFIC (karşılaştırma).",
+    "Aktarım: python manage.py seed_fleet [--force]"
+  ]
+}

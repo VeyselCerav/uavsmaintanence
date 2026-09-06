@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import json
 from datetime import timedelta
 from decimal import Decimal
+from pathlib import Path
 
 from django.core.management.base import BaseCommand
+from django.db import transaction
 from django.utils import timezone
 
 from apps.accounts.models import User
@@ -23,6 +26,7 @@ from apps.fmea.models import FMEA, FMEAItem
 from apps.maintenance.enums import DueStatus, InspectionType, IntervalUnit, Priority, RCMStrategy
 from apps.maintenance.models import (
     MaintenanceDue,
+    MaintenanceRecord,
     MaintenanceTemplate,
     MaintenanceTemplateItem,
     WorkOrder,
@@ -31,7 +35,7 @@ from apps.maintenance.services import DEFAULT_DUE_RULES, MaintenanceDueService
 from apps.maintenance.work_order_services import WorkOrderService
 from apps.notifications.services import NotificationService
 from apps.parts.enums import Currency, PartStatus
-from apps.parts.models import Part, PartCompatibility, WorkOrderPart
+from apps.parts.models import CostRecord, Part, PartCompatibility, WorkOrderPart
 from apps.parts.services import WorkOrderPartService
 from apps.rcm.enums import Detectability, RCMStatus
 from apps.rcm.models import RCMAnalysis, RCMItem
@@ -39,7 +43,12 @@ from apps.rcm.services import RCMService
 from apps.uavs.enums import MaintenanceApproach, UAVStatus
 from apps.uavs.models import UAV, MissionType, PlatformType, UAVClass
 
-DEMO_NOTE = "DEMO DATA — resmi bakım standardı değildir."
+DEMO_NOTE = "Açık kaynak derleme — resmi bakım standardı değildir."
+CATALOG_VERSION = "open-source-v1"
+SETTING_KEY = "fleet.catalog_version"
+CATALOG_PATH = Path(__file__).resolve().parents[2] / "data" / "iha-katalog-acik-kaynak.json"
+ICE_MODELS = {"Integrator", "Camcopter S-100", "Bayraktar TB2"}
+ANCHOR_REGISTRATION = "TR-PUB-007"
 
 FAILURE_MODES = (
     ("PROP-IMBAL", "Pervane dengesizliği"),
@@ -48,19 +57,11 @@ FAILURE_MODES = (
     ("LINK-LOSS", "Komuta bağlantı kaybı"),
 )
 
-COMPONENT_TYPES = (
-    ("AIRFRAME", "Airframe", True, False),
-    ("PROPULSION", "Propulsion", True, True),
-    ("AVIONICS", "Avionics", True, False),
-    ("BATTERY", "Battery", True, True),
-    ("PAYLOAD", "Payload", False, False),
-)
-
 CS_ITEMS = (
     (
         "AIRFRAME",
         "AF-VIS-050",
-        "Airframe visual inspection",
+        "Gövde görsel muayene",
         Decimal("50"),
         IntervalUnit.FLIGHT_HOURS,
         Priority.MEDIUM,
@@ -68,19 +69,9 @@ CS_ITEMS = (
         45,
     ),
     (
-        "AIRFRAME",
-        "AF-OH-200",
-        "Airframe overhaul",
-        Decimal("200"),
-        IntervalUnit.FLIGHT_HOURS,
-        Priority.HIGH,
-        InspectionType.OVERHAUL,
-        480,
-    ),
-    (
         "PROPULSION",
         "PR-VIS-025",
-        "Propulsion visual inspection",
+        "İtki görsel muayene",
         Decimal("25"),
         IntervalUnit.FLIGHT_HOURS,
         Priority.HIGH,
@@ -90,7 +81,7 @@ CS_ITEMS = (
     (
         "BATTERY",
         "BT-CYC-100",
-        "Battery cycle check",
+        "Batarya çevrim kontrolü",
         Decimal("100"),
         IntervalUnit.COMPONENT_CYCLES,
         Priority.MEDIUM,
@@ -100,12 +91,22 @@ CS_ITEMS = (
     (
         "PAYLOAD",
         "PL-CAL-090",
-        "Payload calendar inspection",
+        "Yük takvimli muayene",
         Decimal("90"),
         IntervalUnit.CALENDAR_DAYS,
         Priority.LOW,
         InspectionType.FUNCTIONAL,
         90,
+    ),
+    (
+        "FUEL_SYSTEM",
+        "FU-VIS-050",
+        "Yakıt sistemi görsel muayene",
+        Decimal("50"),
+        IntervalUnit.FLIGHT_HOURS,
+        Priority.MEDIUM,
+        InspectionType.VISUAL,
+        40,
     ),
 )
 
@@ -113,7 +114,7 @@ ST_ITEMS = (
     (
         "AIRFRAME",
         "AF-VIS-080",
-        "Airframe visual inspection",
+        "Gövde görsel muayene",
         Decimal("80"),
         IntervalUnit.FLIGHT_HOURS,
         Priority.MEDIUM,
@@ -123,7 +124,7 @@ ST_ITEMS = (
     (
         "PROPULSION",
         "PR-VIS-050",
-        "Propulsion visual inspection",
+        "İtki görsel muayene",
         Decimal("50"),
         IntervalUnit.FLIGHT_HOURS,
         Priority.MEDIUM,
@@ -133,7 +134,7 @@ ST_ITEMS = (
     (
         "PAYLOAD",
         "PL-CAL-180",
-        "Payload calendar inspection",
+        "Yük takvimli muayene",
         Decimal("180"),
         IntervalUnit.CALENDAR_DAYS,
         Priority.LOW,
@@ -142,33 +143,83 @@ ST_ITEMS = (
     ),
 )
 
-UAV_COUNTERS = {
-    "TR-UAV-001": (Decimal("45"), 12, 40, 60),
-    "TR-UAV-002": (Decimal("110"), 30, 120, 200),
-    "TR-UAV-003": (Decimal("18"), 8, 20, 20),
-    "TR-UAV-004": (Decimal("24"), 10, 90, 80),
-    "TR-UAV-005": (Decimal("80"), 22, 50, 100),
-    "TR-UAV-006": (Decimal("45"), 12, 40, 60),
+COUNTERS = {
+    "TR-PUB-001": (Decimal("12"), 6, 10, 40),
+    "TR-PUB-002": (Decimal("8"), 4, 8, 30),
+    "TR-PUB-003": (Decimal("22"), 10, 18, 70),
+    "TR-PUB-004": (Decimal("35"), 14, 28, 90),
+    "TR-PUB-005": (Decimal("18"), 8, 14, 50),
+    "TR-PUB-006": (Decimal("20"), 9, 16, 55),
+    "TR-PUB-007": (Decimal("42"), 20, 80, 80),
+    "TR-PUB-008": (Decimal("28"), 40, 60, 45),
+    "TR-PUB-009": (Decimal("90"), 24, 40, 200),
+    "TR-PUB-010": (Decimal("70"), 18, 30, 150),
+    "TR-PUB-011": (Decimal("160"), 40, 50, 400),
 }
 
 
 class Command(BaseCommand):
-    help = "Seed catalog, templates, items, demo components and dues."
+    help = "Delete mock AeroMap fleet and load the open-source UAV catalog."
+
+    def add_arguments(self, parser):
+        parser.add_argument(
+            "--force",
+            action="store_true",
+            help="Re-import even if catalog version is already applied.",
+        )
 
     def handle(self, *args, **options):
+        current = SystemSetting.objects.filter(key=SETTING_KEY).first()
+        if (
+            not options["force"]
+            and current
+            and current.value.get("version") == CATALOG_VERSION
+            and UAV.objects.filter(registration_number=ANCHOR_REGISTRATION).exists()
+            and not UAV.objects.filter(registration_number="TR-UAV-001").exists()
+        ):
+            self.stdout.write("Açık kaynak filo zaten yüklü; atlandı (--force ile yenilenir).")
+            return
+
+        catalog = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
+        with transaction.atomic():
+            self._purge_mock_fleet()
+            self._seed_settings()
+            self._seed_from_catalog(catalog)
+
+        SystemSetting.objects.update_or_create(
+            key=SETTING_KEY,
+            defaults={
+                "value": {"version": CATALOG_VERSION, "source": str(CATALOG_PATH.name)},
+                "description": "Loaded open-source UAV catalog version",
+            },
+        )
+        self.stdout.write(self.style.SUCCESS("Açık kaynak filo yüklendi; eski mock kayıtlar silindi."))
+
+    def _purge_mock_fleet(self):
+        demo_uavs = UAV.objects.filter(is_demo=True)
+        MaintenanceDue.objects.filter(uav__in=demo_uavs).delete()
+        MaintenanceRecord.objects.filter(uav__in=demo_uavs).delete()
+        WorkOrderPart.objects.filter(work_order__uav__in=demo_uavs).delete()
+        CostRecord.objects.filter(uav__in=demo_uavs).delete()
+        Document.objects.filter(is_demo=True).delete()
+        Failure.objects.filter(is_demo=True).delete()
+        Flight.objects.filter(is_demo=True).delete()
+        WorkOrder.objects.filter(is_demo=True).delete()
+        UAVComponent.objects.filter(is_demo=True).delete()
+        demo_uavs.delete()
+        MaintenanceTemplateItem.objects.filter(is_demo=True).delete()
+        MaintenanceTemplate.objects.filter(is_demo=True).delete()
+        FMEA.objects.filter(is_demo=True).delete()
+        RCMAnalysis.objects.filter(is_demo=True).delete()
+
+    def _seed_settings(self):
         SystemSetting.objects.update_or_create(
             key="maintenance.due_rules",
-            defaults={
-                "value": DEFAULT_DUE_RULES,
-                "description": "Due status percent thresholds",
-            },
+            defaults={"value": DEFAULT_DUE_RULES, "description": "Due status percent thresholds"},
         )
         SystemSetting.objects.update_or_create(
             key="work_order.auto_create_on_due",
-            defaults={
-                "value": False,
-                "description": "Create OPEN work order when due threshold is crossed",
-            },
+            defaults={"value": False, "description": "Create OPEN work order when due threshold is crossed"},
         )
         SystemSetting.objects.update_or_create(
             key="rpn.thresholds",
@@ -179,318 +230,93 @@ class Command(BaseCommand):
         )
         SystemSetting.objects.update_or_create(
             key="reliability.zero_failure_policy",
-            defaults={
-                "value": "undefined",
-                "description": "undefined | operating_time_as_lower_bound",
-            },
+            defaults={"value": "undefined", "description": "undefined | operating_time_as_lower_bound"},
         )
-        classes = {
-            "VERY_LIGHT": self._class("VERY_LIGHT", "Very Light", 0, Decimal("0"), Decimal("2")),
-            "LIGHT": self._class("LIGHT", "Light", 1, Decimal("2"), Decimal("25")),
-            "MEDIUM": self._class("MEDIUM", "Medium", 2, Decimal("25"), Decimal("150")),
-            "HEAVY": self._class("HEAVY", "Heavy", 3, Decimal("150"), Decimal("600")),
-        }
+
+    def _seed_from_catalog(self, catalog: dict):
+        now = timezone.now()
+        classes = {}
+        for row in catalog["catalog"]["uav_classes"]:
+            classes[row["code"]] = self._class(
+                row["code"],
+                row["name"],
+                row["sort_order"],
+                Decimal(row["mtow_min_kg"]),
+                Decimal(row["mtow_max_kg"]),
+            )
         platforms = {
-            "FIXED_WING": self._platform("FIXED_WING", "Fixed Wing"),
-            "MULTICOPTER": self._platform("MULTICOPTER", "Multicopter"),
-            "VTOL": self._platform("VTOL", "VTOL"),
+            row["code"]: self._platform(row["code"], row["name"])
+            for row in catalog["catalog"]["platform_types"]
         }
         missions = {
-            "MAPPING": self._mission("MAPPING", "Mapping"),
-            "SURVEILLANCE": self._mission("SURVEILLANCE", "Surveillance"),
-            "INSPECTION": self._mission("INSPECTION", "Inspection"),
+            row["code"]: self._mission(row["code"], row["name"])
+            for row in catalog["catalog"]["mission_types"]
         }
         types = {
-            code: self._component_type(code, name, hours, cycles)
-            for code, name, hours, cycles in COMPONENT_TYPES
+            row["code"]: self._component_type(
+                row["code"],
+                row["name"],
+                row["tracks_hours"],
+                row["tracks_cycles"],
+            )
+            for row in catalog["catalog"]["component_types"]
         }
 
-        templates = [
-            (
-                "TPL-FW-MED-MAP-CS",
-                "Fixed Wing Medium Mapping",
-                "MEDIUM",
-                "FIXED_WING",
-                "MAPPING",
-                "CLASS_SPECIFIC",
-            ),
-            (
-                "TPL-FW-MED-SUR-CS",
-                "Fixed Wing Medium Surveillance",
-                "MEDIUM",
-                "FIXED_WING",
-                "SURVEILLANCE",
-                "CLASS_SPECIFIC",
-            ),
-            (
-                "TPL-MC-LGT-MAP-CS",
-                "Multicopter Light Mapping",
-                "LIGHT",
-                "MULTICOPTER",
-                "MAPPING",
-                "CLASS_SPECIFIC",
-            ),
-            (
-                "TPL-MC-LGT-INS-CS",
-                "Multicopter Light Inspection",
-                "LIGHT",
-                "MULTICOPTER",
-                "INSPECTION",
-                "CLASS_SPECIFIC",
-            ),
-            (
-                "TPL-VT-MED-SUR-CS",
-                "VTOL Medium Surveillance",
-                "MEDIUM",
-                "VTOL",
-                "SURVEILLANCE",
-                "CLASS_SPECIFIC",
-            ),
-            (
-                "TPL-FW-MED-MAP-ST",
-                "Standard Fixed Wing Mapping",
-                "MEDIUM",
-                "FIXED_WING",
-                "MAPPING",
-                "STANDARD",
-            ),
-        ]
         template_map = {}
-        for code, name, class_code, platform_code, mission_code, approach in templates:
+        for uav_row in catalog["uavs"]:
+            key = (
+                uav_row["uav_class_code"],
+                uav_row["platform_type_code"],
+                uav_row["mission_type_code"],
+                uav_row["maintenance_approach"],
+            )
+            if key in template_map:
+                continue
+            approach = uav_row["maintenance_approach"]
+            code = self._template_code(*key)
             template, _ = MaintenanceTemplate.objects.update_or_create(
                 code=code,
                 defaults={
-                    "name": name,
+                    "name": f"{uav_row['platform_type_code']} {uav_row['uav_class_code']} {uav_row['mission_type_code']}",
                     "description": DEMO_NOTE,
-                    "uav_class": classes[class_code],
-                    "platform_type": platforms[platform_code],
-                    "mission_type": missions[mission_code],
+                    "uav_class": classes[uav_row["uav_class_code"]],
+                    "platform_type": platforms[uav_row["platform_type_code"]],
+                    "mission_type": missions[uav_row["mission_type_code"]],
                     "approach": approach,
                     "is_active": True,
                     "is_demo": True,
                     "notes": DEMO_NOTE,
                 },
             )
-            template_map[code] = template
-            item_defs = ST_ITEMS if approach == "STANDARD" else CS_ITEMS
-            self._seed_items(template, types, item_defs)
-
-        now = timezone.now()
-        uavs = [
-            (
-                "TR-UAV-001",
-                "SN-FW-001",
-                "Acme Aero",
-                "AeroMap 200",
-                "MEDIUM",
-                "FIXED_WING",
-                "MAPPING",
-                "TPL-FW-MED-MAP-CS",
-                MaintenanceApproach.CLASS_SPECIFIC,
-            ),
-            (
-                "TR-UAV-002",
-                "SN-FW-002",
-                "Acme Aero",
-                "AeroWatch 200",
-                "MEDIUM",
-                "FIXED_WING",
-                "SURVEILLANCE",
-                "TPL-FW-MED-SUR-CS",
-                MaintenanceApproach.CLASS_SPECIFIC,
-            ),
-            (
-                "TR-UAV-003",
-                "SN-MC-001",
-                "SkyGrid",
-                "GridLite 4",
-                "LIGHT",
-                "MULTICOPTER",
-                "MAPPING",
-                "TPL-MC-LGT-MAP-CS",
-                MaintenanceApproach.CLASS_SPECIFIC,
-            ),
-            (
-                "TR-UAV-004",
-                "SN-MC-002",
-                "SkyGrid",
-                "GridInspect 4",
-                "LIGHT",
-                "MULTICOPTER",
-                "INSPECTION",
-                "TPL-MC-LGT-INS-CS",
-                MaintenanceApproach.CLASS_SPECIFIC,
-            ),
-            (
-                "TR-UAV-005",
-                "SN-VT-001",
-                "LiftWing",
-                "HybridEye 150",
-                "MEDIUM",
-                "VTOL",
-                "SURVEILLANCE",
-                "TPL-VT-MED-SUR-CS",
-                MaintenanceApproach.CLASS_SPECIFIC,
-            ),
-            (
-                "TR-UAV-006",
-                "SN-FW-006",
-                "Acme Aero",
-                "AeroMap 200-ST",
-                "MEDIUM",
-                "FIXED_WING",
-                "MAPPING",
-                "TPL-FW-MED-MAP-ST",
-                MaintenanceApproach.STANDARD,
-            ),
-        ]
-        for row in uavs:
-            (
-                registration,
-                serial,
-                manufacturer,
-                model,
-                class_code,
-                platform_code,
-                mission_code,
-                template_code,
-                approach,
-            ) = row
-            hours, flights, cycles, age_days = UAV_COUNTERS[registration]
-            installed_at = now - timedelta(days=age_days)
-            uav, _ = UAV.objects.update_or_create(
-                registration_number=registration,
-                defaults={
-                    "serial_number": serial,
-                    "manufacturer": manufacturer,
-                    "model": model,
-                    "uav_class": classes[class_code],
-                    "platform_type": platforms[platform_code],
-                    "mission_type": missions[mission_code],
-                    "maintenance_template": template_map[template_code],
-                    "maintenance_approach": approach,
-                    "status": UAVStatus.READY,
-                    "is_demo": True,
-                    "notes": DEMO_NOTE,
-                    "total_flight_hours": hours,
-                    "total_flight_count": flights,
-                    "total_flight_cycles": cycles,
-                    "inventory_entry_date": installed_at.date(),
-                },
+            item_defs = ST_ITEMS if approach == MaintenanceApproach.STANDARD else CS_ITEMS
+            ice = any(
+                item["model"] in ICE_MODELS
+                and item["uav_class_code"] == key[0]
+                and item["platform_type_code"] == key[1]
+                and item["mission_type_code"] == key[2]
+                and item["maintenance_approach"] == key[3]
+                for item in catalog["uavs"]
             )
-            for type_code, type_name, _hours, _cycles in COMPONENT_TYPES:
-                UAVComponent.objects.update_or_create(
-                    serial_number=f"{serial}-{type_code[:3]}",
-                    defaults={
-                        "uav": uav,
-                        "component_type": types[type_code],
-                        "name": type_name,
-                        "part_number": f"PN-{type_code}",
-                        "manufacturer": manufacturer,
-                        "model": model,
-                        "installed_at": installed_at,
-                        "operating_hours": hours,
-                        "cycle_count": cycles,
-                        "status": ComponentStatus.INSTALLED,
-                        "is_demo": True,
-                        "notes": DEMO_NOTE,
-                    },
-                )
-            MaintenanceDueService.recalculate(uav)
+            filtered = [
+                item
+                for item in item_defs
+                if not (item[0] == "BATTERY" and ice) and not (item[0] == "FUEL_SYSTEM" and not ice)
+            ]
+            self._seed_items(template, types, filtered)
+            template_map[key] = template
 
-        demo_uav = UAV.objects.filter(registration_number="TR-UAV-001").first()
+        created = []
+        for uav_row in catalog["uavs"]:
+            created.append(self._seed_uav(uav_row, classes, platforms, missions, types, template_map, now))
+
         operator = User.objects.filter(is_active=True).first()
-        if demo_uav:
-            start = now - timedelta(hours=7)
-            end = now - timedelta(hours=1)
-            Flight.objects.update_or_create(
-                flight_number="FL-DEMO-001",
-                defaults={
-                    "uav": demo_uav,
-                    "operator": operator,
-                    "mission_type": demo_uav.mission_type,
-                    "flown_on": start.date(),
-                    "start_at": start,
-                    "end_at": end,
-                    "duration_hours": Decimal("6.00"),
-                    "result": FlightResult.COMPLETED,
-                    "counters_applied": False,
-                    "is_demo": True,
-                    "notes": DEMO_NOTE,
-                },
-            )
-
-        modes = {}
-        for code, name in FAILURE_MODES:
-            modes[code] = self._failure_mode(code, name)
+        modes = {code: self._failure_mode(code, name) for code, name in FAILURE_MODES}
         self._seed_fmea(classes, platforms, missions, types, modes, operator, now)
         part = self._seed_parts(classes, platforms, types)
 
-        due = MaintenanceDue.objects.filter(
-            uav__registration_number="TR-UAV-001",
-            template_item__task_code="PR-VIS-025",
-        ).first()
-        if due and not WorkOrderService.has_open(
-            component_id=due.component_id,
-            template_item_id=due.template_item_id,
-        ):
-            work_order = WorkOrderService.create_from_due(actor=operator, due=due)
-            work_order.notes = DEMO_NOTE
-            work_order.save(update_fields=["notes", "updated_at"])
-
-        if demo_uav:
-            propulsion = UAVComponent.objects.filter(
-                uav=demo_uav,
-                component_type__code="PROPULSION",
-            ).first()
-            Failure.objects.update_or_create(
-                uav=demo_uav,
-                failure_mode=modes["PROP-IMBAL"],
-                defaults={
-                    "component": propulsion,
-                    "occurred_at": now - timedelta(hours=12),
-                    "discovered_during": DiscoveredDuring.MAINTENANCE,
-                    "severity": FailureSeverity.HIGH,
-                    "description": "Pervane titreşimi ve dengesizlik şüphesi.",
-                    "downtime_hours": Decimal("2.50"),
-                    "resolved_at": None,
-                    "is_demo": True,
-                },
-            )
-            Failure.objects.update_or_create(
-                uav=demo_uav,
-                failure_mode=modes["BEAR-WEAR"],
-                defaults={
-                    "component": propulsion,
-                    "occurred_at": now - timedelta(days=10),
-                    "discovered_during": DiscoveredDuring.FLIGHT,
-                    "severity": FailureSeverity.MEDIUM,
-                    "description": "Çözülmüş rulman arızası (demo).",
-                    "downtime_hours": Decimal("2.50"),
-                    "resolved_at": now - timedelta(days=9),
-                    "is_demo": True,
-                },
-            )
-            demo_wo = WorkOrder.objects.filter(uav=demo_uav, is_demo=True).first()
-            if (
-                demo_wo
-                and part
-                and operator
-                and not WorkOrderPart.objects.filter(work_order=demo_wo, part=part).exists()
-            ):
-                WorkOrderPartService.create(
-                    actor=operator,
-                    work_order=demo_wo,
-                    validated_data={"part": part, "quantity": Decimal("1.00")},
-                )
-            self._seed_documents(demo_uav, demo_wo, operator)
-            AuditService.log(
-                actor=operator,
-                action=AuditAction.UPDATE,
-                entity_type="SystemSetting",
-                message="Demo seed: system settings initialized",
-                new_value={"source": "seed_fleet"},
-            )
+        anchor = UAV.objects.filter(registration_number=ANCHOR_REGISTRATION).first()
+        if anchor:
+            self._seed_anchor_ops(anchor, modes, part, operator, now)
 
         alert_dues = MaintenanceDue.objects.filter(
             status__in=[DueStatus.DUE, DueStatus.OVERDUE, DueStatus.CRITICAL]
@@ -498,21 +324,164 @@ class Command(BaseCommand):
         NotificationService.emit_due_changes(
             [(due, None, due.uav, due.component, due.template_item) for due in alert_dues]
         )
+        if operator:
+            AuditService.log(
+                actor=operator,
+                action=AuditAction.UPDATE,
+                entity_type="SystemSetting",
+                message="Open-source fleet catalog loaded",
+                new_value={"version": CATALOG_VERSION, "uavs": len(created)},
+            )
 
-        self.stdout.write(self.style.SUCCESS("Fleet seed completed."))
+    def _seed_uav(self, uav_row, classes, platforms, missions, types, template_map, now):
+        registration = uav_row["suggested_registration"]
+        hours, flights, cycles, age_days = COUNTERS.get(
+            registration, (Decimal("15"), 6, 12, 40)
+        )
+        installed_at = now - timedelta(days=age_days)
+        key = (
+            uav_row["uav_class_code"],
+            uav_row["platform_type_code"],
+            uav_row["mission_type_code"],
+            uav_row["maintenance_approach"],
+        )
+        ice = uav_row["model"] in ICE_MODELS
+        sources = "; ".join(uav_row.get("sources") or [])
+        uav, _ = UAV.objects.update_or_create(
+            registration_number=registration,
+            defaults={
+                "serial_number": uav_row["serial_number"],
+                "manufacturer": uav_row["manufacturer"],
+                "model": uav_row["model"],
+                "uav_class": classes[uav_row["uav_class_code"]],
+                "platform_type": platforms[uav_row["platform_type_code"]],
+                "mission_type": missions[uav_row["mission_type_code"]],
+                "maintenance_template": template_map[key],
+                "maintenance_approach": uav_row["maintenance_approach"],
+                "mtow_kg": Decimal(uav_row["mtow_kg"]),
+                "status": UAVStatus.READY,
+                "is_demo": True,
+                "notes": f"{uav_row.get('notes') or DEMO_NOTE}\nKaynak: {sources}",
+                "total_flight_hours": hours,
+                "total_flight_count": flights,
+                "total_flight_cycles": cycles,
+                "inventory_entry_date": installed_at.date(),
+            },
+        )
+        type_codes = ["AIRFRAME", "PROPULSION", "AVIONICS", "PAYLOAD"]
+        if ice:
+            type_codes.append("FUEL_SYSTEM")
+        else:
+            type_codes.append("BATTERY")
+        serial = uav_row["serial_number"]
+        for type_code in type_codes:
+            component_type = types[type_code]
+            UAVComponent.objects.update_or_create(
+                serial_number=f"{serial}-{type_code[:3]}",
+                defaults={
+                    "uav": uav,
+                    "component_type": component_type,
+                    "name": component_type.name,
+                    "part_number": f"PN-{type_code}",
+                    "manufacturer": uav_row["manufacturer"],
+                    "model": uav_row["model"],
+                    "installed_at": installed_at,
+                    "operating_hours": hours,
+                    "cycle_count": cycles,
+                    "status": ComponentStatus.INSTALLED,
+                    "is_demo": True,
+                    "notes": DEMO_NOTE,
+                },
+            )
+        MaintenanceDueService.recalculate(uav)
+        return uav
+
+    def _seed_anchor_ops(self, uav, modes, part, operator, now):
+        start = now - timedelta(hours=7)
+        end = now - timedelta(hours=1)
+        Flight.objects.update_or_create(
+            flight_number="FL-M350-001",
+            defaults={
+                "uav": uav,
+                "operator": operator,
+                "mission_type": uav.mission_type,
+                "flown_on": start.date(),
+                "start_at": start,
+                "end_at": end,
+                "duration_hours": Decimal("6.00"),
+                "result": FlightResult.COMPLETED,
+                "counters_applied": False,
+                "is_demo": True,
+                "notes": DEMO_NOTE,
+            },
+        )
+        due = MaintenanceDue.objects.filter(
+            uav=uav,
+            template_item__task_code="PR-VIS-025",
+        ).first()
+        work_order = None
+        if due and operator and not WorkOrderService.has_open(
+            component_id=due.component_id,
+            template_item_id=due.template_item_id,
+        ):
+            work_order = WorkOrderService.create_from_due(actor=operator, due=due)
+            work_order.notes = DEMO_NOTE
+            work_order.save(update_fields=["notes", "updated_at"])
+        propulsion = UAVComponent.objects.filter(uav=uav, component_type__code="PROPULSION").first()
+        Failure.objects.update_or_create(
+            uav=uav,
+            failure_mode=modes["PROP-IMBAL"],
+            defaults={
+                "component": propulsion,
+                "occurred_at": now - timedelta(hours=12),
+                "discovered_during": DiscoveredDuring.MAINTENANCE,
+                "severity": FailureSeverity.HIGH,
+                "description": "Pervane titreşimi (Matrice 350 RTK demo kaydı).",
+                "downtime_hours": Decimal("2.50"),
+                "resolved_at": None,
+                "is_demo": True,
+            },
+        )
+        Failure.objects.update_or_create(
+            uav=uav,
+            failure_mode=modes["BEAR-WEAR"],
+            defaults={
+                "component": propulsion,
+                "occurred_at": now - timedelta(days=10),
+                "discovered_during": DiscoveredDuring.FLIGHT,
+                "severity": FailureSeverity.MEDIUM,
+                "description": "Çözülmüş rulman arızası (demo).",
+                "downtime_hours": Decimal("2.50"),
+                "resolved_at": now - timedelta(days=9),
+                "is_demo": True,
+            },
+        )
+        if work_order and part and operator and not WorkOrderPart.objects.filter(
+            work_order=work_order, part=part
+        ).exists():
+            WorkOrderPartService.create(
+                actor=operator,
+                work_order=work_order,
+                validated_data={"part": part, "quantity": Decimal("1.00")},
+            )
+        Document.objects.update_or_create(
+            storage_key="DOC-M350-SPEC",
+            defaults={
+                "title": "DJI Matrice 350 RTK teknik özet",
+                "file_name": "matrice-350-rtk-specs.pdf",
+                "content_type": "application/pdf",
+                "size_bytes": 245760,
+                "document_type": DocumentType.MANUAL,
+                "uav": uav,
+                "uploaded_by": operator,
+                "is_demo": True,
+                "notes": DEMO_NOTE,
+            },
+        )
 
     def _seed_items(self, template, types, item_defs):
         for sequence, row in enumerate(item_defs, start=1):
-            (
-                type_code,
-                task_code,
-                task_name,
-                interval_value,
-                interval_unit,
-                priority,
-                inspection_type,
-                duration,
-            ) = row
+            type_code, task_code, task_name, interval_value, interval_unit, priority, inspection_type, duration = row
             MaintenanceTemplateItem.objects.update_or_create(
                 template=template,
                 component_type=types[type_code],
@@ -531,6 +500,10 @@ class Command(BaseCommand):
                 },
             )
 
+    def _template_code(self, class_code, platform_code, mission_code, approach):
+        suffix = "ST" if approach == MaintenanceApproach.STANDARD else "CS"
+        return f"TPL-{platform_code[:3]}-{class_code[:3]}-{mission_code[:3]}-{suffix}"
+
     def _component_type(self, code, name, tracks_hours, tracks_cycles):
         obj, _ = ComponentType.objects.update_or_create(
             code=code,
@@ -548,24 +521,19 @@ class Command(BaseCommand):
     def _failure_mode(self, code, name):
         obj, _ = FailureMode.objects.update_or_create(
             code=code,
-            defaults={
-                "name": name,
-                "description": DEMO_NOTE,
-                "is_demo": True,
-                "is_active": True,
-            },
+            defaults={"name": name, "description": DEMO_NOTE, "is_demo": True, "is_active": True},
         )
         return obj
 
     def _seed_fmea(self, classes, platforms, missions, types, modes, operator, now):
         fmea, _ = FMEA.objects.update_or_create(
-            code="FMEA-FW-MED-PROP-001",
+            code="FMEA-MC-LGT-PROP-001",
             defaults={
-                "title": "Fixed-wing medium propulsion",
-                "uav_class": classes["MEDIUM"],
-                "platform_type": platforms["FIXED_WING"],
+                "title": "Multicopter light propulsion",
+                "uav_class": classes["LIGHT"],
+                "platform_type": platforms["MULTICOPTER"],
                 "component_type": types["PROPULSION"],
-                "mission_type": missions["MAPPING"],
+                "mission_type": missions["INSPECTION"],
                 "status": FMEAStatus.APPROVED,
                 "revision": 1,
                 "approved_at": now,
@@ -597,13 +565,13 @@ class Command(BaseCommand):
 
     def _seed_rcm(self, classes, platforms, missions, types, fmea_item, operator, now):
         analysis, _ = RCMAnalysis.objects.update_or_create(
-            code="RCM-FW-MED-PROP-001",
+            code="RCM-MC-LGT-PROP-001",
             defaults={
-                "title": "Fixed-wing medium propulsion",
-                "uav_class": classes["MEDIUM"],
-                "platform_type": platforms["FIXED_WING"],
+                "title": "Multicopter light propulsion",
+                "uav_class": classes["LIGHT"],
+                "platform_type": platforms["MULTICOPTER"],
                 "component_type": types["PROPULSION"],
-                "mission_type": missions["MAPPING"],
+                "mission_type": missions["INSPECTION"],
                 "status": RCMStatus.APPROVED,
                 "revision": 1,
                 "approved_at": now,
@@ -632,17 +600,18 @@ class Command(BaseCommand):
                 "is_demo": True,
             },
         )
-        RCMService.apply_to_template(actor=operator, analysis=analysis)
+        if operator:
+            RCMService.apply_to_template(actor=operator, analysis=analysis)
 
     def _seed_parts(self, classes, platforms, types):
         defaults = {
             "name": "Pervane dengeleme kiti",
-            "manufacturer": "Acme Aero",
-            "model": "BAL-200",
+            "manufacturer": "DJI",
+            "model": "2110s",
             "min_stock_qty": Decimal("2.00"),
             "unit_cost": Decimal("1500.00"),
             "currency": Currency.TRY,
-            "supplier": "AeroParts",
+            "supplier": "Enterprise Parts",
             "location": "Hangar A",
             "status": PartStatus.ACTIVE,
             "is_demo": True,
@@ -650,50 +619,15 @@ class Command(BaseCommand):
         }
         if not Part.objects.filter(part_number="PROP-BAL-001").exists():
             defaults["stock_qty"] = Decimal("4.00")
-        part, _ = Part.objects.update_or_create(
-            part_number="PROP-BAL-001",
-            defaults=defaults,
-        )
+        part, _ = Part.objects.update_or_create(part_number="PROP-BAL-001", defaults=defaults)
         PartCompatibility.objects.update_or_create(
             part=part,
             component_type=types["PROPULSION"],
-            uav_class=classes["MEDIUM"],
-            platform_type=platforms["FIXED_WING"],
+            uav_class=classes["LIGHT"],
+            platform_type=platforms["MULTICOPTER"],
             defaults={"is_demo": True},
         )
         return part
-
-    def _seed_documents(self, uav, work_order, operator):
-        Document.objects.update_or_create(
-            storage_key="DOC-UAV-001-MANUAL",
-            defaults={
-                "title": "AeroMap 200 uçuş el kitabı",
-                "file_name": "aeromap-200-manual.pdf",
-                "content_type": "application/pdf",
-                "size_bytes": 245760,
-                "document_type": DocumentType.MANUAL,
-                "uav": uav,
-                "uploaded_by": operator,
-                "is_demo": True,
-                "notes": DEMO_NOTE,
-            },
-        )
-        if work_order:
-            Document.objects.update_or_create(
-                storage_key="DOC-WO-PROP-PHOTO",
-                defaults={
-                    "title": "Pervane titreşim fotoğrafı",
-                    "file_name": "prop-vibration.jpg",
-                    "content_type": "image/jpeg",
-                    "size_bytes": 81920,
-                    "document_type": DocumentType.PHOTO,
-                    "uav": uav,
-                    "work_order": work_order,
-                    "uploaded_by": operator,
-                    "is_demo": True,
-                    "notes": DEMO_NOTE,
-                },
-            )
 
     def _class(self, code, name, sort_order, mtow_min, mtow_max):
         obj, _ = UAVClass.objects.update_or_create(

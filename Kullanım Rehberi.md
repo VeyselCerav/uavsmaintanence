@@ -1,5 +1,16 @@
 # Kullanım Rehberi
 
+Rol bazlı kılavuzlar:
+
+- **[Yönetici (ADMIN)](docs/kullanim-kilavuzu-yonetici.md)** — filo, şablon, kullanıcı, ayar, rapor
+- **[Teknisyen](docs/kullanim-kilavuzu-teknisyen.md)** — iş emri yürütme, arıza, görüntüleme
+
+Açık kaynak İHA JSON (yüklenmedi): [data/import/iha-katalog-acik-kaynak.json](data/import/iha-katalog-acik-kaynak.json)
+
+Aşağıdaki özet hızlı bakış içindir.
+
+---
+
 **İHA Bakım Yönetim ve Planlama Sistemi** — teknisyen ve yönetici (admin) kullanıcıları için kısa el kitabı.
 
 Ana adres: **http://localhost:8080** (Nginx üzerinden; önerilen giriş noktası)
@@ -66,9 +77,9 @@ Sol menüden erişilir:
 ### 4.1 Yönetici — demo filoyu inceleme
 
 1. **Özet** → filo pasta grafiği ve vade çubuk grafiğini kontrol edin.
-2. **Filo** → örn. `TR-UAV-001` detayına girin.
+2. **Filo** → örn. `TR-PUB-001` (eBee X) detayına girin.
 3. **Takılı komponentler**, **Bakım vadeleri**, **Olay geçmişi** bölümlerini inceleyin.
-4. **Karşılaştırma** → `TR-UAV-006` (STANDARD) ile sınıfa özgü filonun metriklerini yan yana görün.
+4. **Karşılaştırma** → `TR-PUB-004` (Puma, STANDARD) ile `TR-PUB-003` (Bayraktar Mini, CLASS_SPECIFIC) LIGHT sabit kanat gözetleme kolunu görün.
 
 ### 4.2 Yönetici — yeni İHA ve bakım şablonu
 
@@ -79,7 +90,7 @@ Sol menüden erişilir:
 
 ### 4.3 Teknisyen — iş emrini tamamlama
 
-1. **İş emirleri** → açık emri seçin (ör. demo `TR-UAV-001` pervane vadesi).
+1. **İş emirleri** → açık emri seçin (ör. demo `TR-PUB-007` Matrice 350 pervane vadesi).
 2. **Başlat** → işe alın.
 3. Bulguları/notları girin; gerekirse **Parçalar** üzerinden iş emrine parça ekleyin.
 4. **Tamamla** → bakım kaydı oluşur; ilgili vade sıfırlanır/güncellenir.
@@ -133,7 +144,7 @@ Vade eşikleri ve RPN bantları burada değiştirilir; değişiklikler sunucuda 
 
 İHA, komponent, iş emri, bakım, arıza, parça.
 
-Örnek: `TR-UAV-001`
+Örnek: `TR-PUB-001`
 
 ---
 
@@ -145,7 +156,7 @@ Vade eşikleri ve RPN bantları burada değiştirilir; değişiklikler sunucuda 
 docker compose exec backend python manage.py seed_fleet
 ```
 
-Demo İHA’lar `TR-UAV-001` … `TR-UAV-006` aralığındadır. `TR-UAV-006`, `TR-UAV-001` ile aynı sınıf/platform/görevde **STANDARD** bakım yaklaşımı içindir (karşılaştırma demosu).
+Demo İHA’lar `TR-PUB-001` … `TR-PUB-011` aralığındadır (açık kaynak katalog). `TR-PUB-004` (Puma) STANDARD, `TR-PUB-003` (Bayraktar Mini) CLASS_SPECIFIC karşılaştırması içindir.
 
 Demo kayıtları **DEMO** rozeti ile işaretlidir; resmi bakım standardı değildir.
 

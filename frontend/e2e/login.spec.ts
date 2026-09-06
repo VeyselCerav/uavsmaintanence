@@ -18,6 +18,6 @@ test("login opens the dashboard", async ({ page }) => {
 test("global search finds a demo UAV", async ({ page }) => {
   await loginAsAdmin(page);
   const search = page.getByPlaceholder(/ara|search|axtar/i);
-  await search.fill("TR-UAV-001");
-  await expect(page.getByRole("link", { name: /TR-UAV-001/i }).first()).toBeVisible();
+  await search.fill("TR-PUB-001");
+  await expect(page.getByRole("link", { name: /TR-PUB-001/i }).first()).toBeVisible();
 });
