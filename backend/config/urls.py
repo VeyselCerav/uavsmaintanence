@@ -13,6 +13,14 @@ def healthcheck(_request):
     return JsonResponse({"success": True, "data": {"status": "ok"}})
 
 
+def readiness(_request):
+    from django.db import connection
+
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT 1")
+    return JsonResponse({"success": True, "data": {"status": "ready"}})
+
+
 api_v1 = [
     path("auth/", include("apps.accounts.urls")),
     path("users/", include("apps.accounts.user_urls")),
@@ -48,6 +56,7 @@ api_v1 = [
 ]
 
 urlpatterns = [
+    path("health/ready/", readiness, name="ready"),
     path("health/", healthcheck, name="health"),
     path("api/v1/", include(api_v1)),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),

@@ -106,9 +106,10 @@ if _database_url:
 
     DATABASES["default"] = dj_database_url.parse(
         _database_url,
-        conn_max_age=600,
+        conn_max_age=0,
         ssl_require=True,
     )
+    DATABASES["default"]["DISABLE_SERVER_SIDE_CURSORS"] = True
 
 AUTH_USER_MODEL = "accounts.User"
 AUTH_PASSWORD_VALIDATORS = [

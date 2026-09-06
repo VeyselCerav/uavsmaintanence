@@ -8,3 +8,12 @@ def test_healthcheck():
     payload = response.json()
     assert payload["success"] is True
     assert payload["data"]["status"] == "ok"
+
+
+def test_readiness():
+    client = Client()
+    response = client.get("/health/ready/")
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["success"] is True
+    assert payload["data"]["status"] == "ready"

@@ -7,7 +7,7 @@ Repo: [github.com/VeyselCerav/uavsmaintanence](https://github.com/VeyselCerav/ua
 | Katman | Servis | Ücretsiz plan |
 |---|---|---|
 | Frontend (Next.js) | [Vercel](https://vercel.com) | Hobby |
-| Backend (Django) | [Render](https://render.com) | Free (uyku modu; ilk istekte ~30 sn uyanır) |
+| Backend (Django) | [Render](https://render.com) | Free (keep-alive ile uyanık tutulur) |
 | PostgreSQL | [Neon](https://neon.tech) | Free |
 
 > Doküman dosyaları Render ücretsiz diskte **kalıcı değildir** (yeniden deploy sonrası silinebilir). Tez demosu için metadata + yeni yüklemeler yeterlidir.
@@ -50,7 +50,7 @@ git push -u origin main
 | `DJANGO_ALLOWED_HOSTS` | `uavs-backend.onrender.com` (Render size verdiği host) |
 | `CORS_ALLOWED_ORIGINS` | `https://SIZIN-VERCEL-ADRESINIZ.vercel.app` |
 | `CSRF_TRUSTED_ORIGINS` | Aynı Vercel URL |
-| `SEED_DEMO` | `true` (ilk deploy); sonra `false` |
+| `SEED_DEMO` | `true` (yalnızca boş veritabanında çalışır; her uyanışta tekrar etmez) |
 
 5. **Manual Deploy** veya otomatik deploy bekleyin.
 6. Sağlık: `https://uavs-backend.onrender.com/health/` → `{"success":true,...}`
@@ -85,14 +85,23 @@ Canlı ortamda demo parolaları **hemen değiştirmeniz** önerilir (Kontrol mer
 
 ---
 
-## 5. Sorun giderme
+## 5. Ücretsiz keep-alive (uyku modunu azaltır)
+
+Render Free ~15 dakikada uykuya yatar; ilk istek 30–60 sn sürebilir. Repodaki `.github/workflows/keep-alive.yml` her 10 dakikada `/health/ready/` adresini yoklar (Render + Neon).
+
+- Workflow `main` dalına gittikten sonra **Actions** sekmesinde **Keep-alive** görünür.
+- İlk kez **Run workflow** ile elle çalıştırın; zamanlayıcı GitHub’da birkaç dakika gecikebilir.
+- Backend adresi farklıysa repo **Settings → Secrets and variables → Actions → Variables** içine `BACKEND_HEALTH_URL` ekleyin (`https://SIZIN-HOST.onrender.com/health/ready/`).
+- GitHub Actions kapalıysa ücretsiz [cron-job.org](https://cron-job.org) ile aynı URL’ye 10 dakikada bir GET atın.
+
+## 6. Sorun giderme
 
 | Belirti | Çözüm |
 |---|---|
 | Frontend “network” hatası | `NEXT_PUBLIC_API_URL` doğru mu; Render uyanık mı |
 | CORS hatası | Vercel URL `CORS_ALLOWED_ORIGINS` içinde mi |
-| 502 / timeout | Render free uyuyor; sayfayı yenileyin, 30–60 sn bekleyin |
-| Boş veritabanı | `SEED_DEMO=true` ile redeploy veya shell: `python manage.py seed_fleet` |
+| 502 / timeout | Keep-alive çalışıyor mu bakın; yine uykudaysa sayfayı yenileyin, 30–60 sn bekleyin |
+| Boş veritabanı | `SEED_DEMO=true` ile redeploy (yalnızca boş DB’de seed eder) veya shell: `python manage.py seed_fleet` |
 
 Render shell (PowerShell’den değil, Render pano → Shell):
 
