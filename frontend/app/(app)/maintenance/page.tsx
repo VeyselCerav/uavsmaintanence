@@ -103,7 +103,13 @@ export default function MaintenancePage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {items.length === 0 ? (
+            {query.isPending ? (
+              <TableRow>
+                <TableCell className="text-muted-foreground" colSpan={8}>
+                  {t("common.loading")}
+                </TableCell>
+              </TableRow>
+            ) : items.length === 0 ? (
               <TableRow>
                 <TableCell className="text-muted-foreground" colSpan={8}>
                   {t("due.listEmpty")}

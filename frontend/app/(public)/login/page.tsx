@@ -1,5 +1,6 @@
 "use client";
 
+import { useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
@@ -13,10 +14,15 @@ import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/native-select";
 import { useI18n } from "@/lib/i18n-context";
 import { login } from "@/services/auth";
+import { getDashboard } from "@/services/dashboard";
+import { listDues } from "@/services/maintenance";
+import { listUAVs } from "@/services/uavs";
+import { listWorkOrders } from "@/services/work-orders";
 
 export default function LoginPage() {
   const { t, locale, setLocale } = useI18n();
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorKey, setErrorKey] = useState<string | null>(null);
@@ -38,6 +44,13 @@ export default function LoginPage() {
     setErrorKey(null);
     try {
       await login(email, password);
+      void queryClient.prefetchQuery({ queryKey: ["dashboard"], queryFn: getDashboard });
+      void queryClient.prefetchQuery({ queryKey: ["uavs", ""], queryFn: () => listUAVs("") });
+      void queryClient.prefetchQuery({ queryKey: ["work-orders", ""], queryFn: () => listWorkOrders("") });
+      void queryClient.prefetchQuery({
+        queryKey: ["dues", "", "attention", ""],
+        queryFn: () => listDues("", "attention", ""),
+      });
       router.replace("/dashboard");
     } catch (error) {
       const key = error instanceof Error ? error.message : "errors.generic";

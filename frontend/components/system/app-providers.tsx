@@ -12,7 +12,20 @@ function backendOrigin(): string {
 }
 
 export function AppProviders({ children }: { children: ReactNode }) {
-  const [client] = useState(() => new QueryClient());
+  const [client] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 120_000,
+            gcTime: 30 * 60_000,
+            retry: 1,
+            retryDelay: 1500,
+            refetchOnWindowFocus: false,
+          },
+        },
+      }),
+  );
   useEffect(() => {
     void fetch(`${backendOrigin()}/health/?db=1`, { cache: "no-store" }).catch(() => {});
   }, []);

@@ -85,7 +85,13 @@ export default function FailuresPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {items.length === 0 ? (
+            {query.isPending ? (
+              <TableRow>
+                <TableCell className="text-muted-foreground" colSpan={5}>
+                  {t("common.loading")}
+                </TableCell>
+              </TableRow>
+            ) : items.length === 0 ? (
               <TableRow>
                 <TableCell className="text-muted-foreground" colSpan={5}>
                   {t("failure.empty")}

@@ -76,7 +76,13 @@ export default function UavsPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {items.length === 0 ? (
+            {query.isPending ? (
+              <TableRow>
+                <TableCell className="text-muted-foreground" colSpan={7}>
+                  {t("common.loading")}
+                </TableCell>
+              </TableRow>
+            ) : items.length === 0 ? (
               <TableRow>
                 <TableCell className="text-muted-foreground" colSpan={7}>
                   {t("uav.empty")}

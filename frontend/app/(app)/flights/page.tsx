@@ -75,7 +75,13 @@ export default function FlightsPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {items.length === 0 ? (
+            {query.isPending ? (
+              <TableRow>
+                <TableCell className="text-muted-foreground" colSpan={6}>
+                  {t("common.loading")}
+                </TableCell>
+              </TableRow>
+            ) : items.length === 0 ? (
               <TableRow>
                 <TableCell className="text-muted-foreground" colSpan={6}>
                   {t("flight.empty")}

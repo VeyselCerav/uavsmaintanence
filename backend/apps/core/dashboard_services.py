@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from django.core.cache import cache
 from django.db.models import Count, QuerySet
 
 from apps.maintenance.enums import (
@@ -16,6 +17,7 @@ from apps.uavs.enums import UAVStatus
 from apps.uavs.models import UAV
 
 ITEM_LIMIT = 8
+CACHE_SECONDS = 45
 ATTENTION_DUE_STATUSES = (DueStatus.DUE, DueStatus.OVERDUE, DueStatus.CRITICAL)
 OVERDUE_DUE_STATUSES = (DueStatus.OVERDUE, DueStatus.CRITICAL)
 ALL_WORK_ORDER_STATUSES = tuple(WorkOrderStatus.values)
@@ -33,6 +35,17 @@ def _count_map(queryset: QuerySet, field: str, keys: tuple[str, ...]) -> dict[st
 class DashboardService:
     @classmethod
     def build(cls, *, user) -> dict:
+        role = getattr(getattr(user, "role", None), "code", "") or ""
+        cache_key = f"dashboard:{user.pk}:{role}"
+        cached = cache.get(cache_key)
+        if cached is not None:
+            return cached
+        data = cls._compute(user=user)
+        cache.set(cache_key, data, CACHE_SECONDS)
+        return data
+
+    @classmethod
+    def _compute(cls, *, user) -> dict:
         fleet = _count_map(UAV.objects.all(), "status", tuple(UAVStatus.values))
         dues = MaintenanceDue.objects.filter(status__in=ALERT_DUE_STATUSES)
         due_counts = _count_map(dues, "status", ALERT_DUE_STATUSES)
