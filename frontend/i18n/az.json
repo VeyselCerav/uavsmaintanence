@@ -35,6 +35,7 @@
     "password": "Şifrə",
     "forgotPassword": "Şifrəni unutdum",
     "submit": "Daxil ol",
+    "waking": "Server oyanır, bir neçə saniyə çəkə bilər…",
     "logout": "Çıxış",
     "resetHint": "E-poçt göndərilmir. İnkişaf mühitində sıfırlama keçidi göstərilir.",
     "resetSubmit": "Sıfırlama istə",

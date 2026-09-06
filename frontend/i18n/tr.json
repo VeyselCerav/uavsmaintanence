@@ -35,6 +35,7 @@
     "password": "Parola",
     "forgotPassword": "Parolamı unuttum",
     "submit": "Oturum aç",
+    "waking": "Sunucu uyanıyor, birkaç saniye sürebilir…",
     "logout": "Çıkış",
     "resetHint": "E-posta gönderilmez. Geliştirme ortamında sıfırlama bağlantısı gösterilir.",
     "resetSubmit": "Sıfırlama iste",

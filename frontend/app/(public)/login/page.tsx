@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 import { LoginSkyBackground } from "@/components/system/login-sky-background";
 import { UniversityBrand } from "@/components/system/university-brand";
@@ -21,6 +21,16 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [errorKey, setErrorKey] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
+  const [slow, setSlow] = useState(false);
+
+  useEffect(() => {
+    if (!pending) {
+      setSlow(false);
+      return;
+    }
+    const timer = window.setTimeout(() => setSlow(true), 4000);
+    return () => window.clearTimeout(timer);
+  }, [pending]);
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
@@ -77,7 +87,7 @@ export default function LoginPage() {
                 size="lg"
                 className="w-full bg-[#79113e] text-white hover:bg-[#641034] focus-visible:border-[#79113e] focus-visible:ring-[#79113e]/30"
               >
-                {pending ? t("common.loading") : t("auth.submit")}
+                {pending ? (slow ? t("auth.waking") : t("common.loading")) : t("auth.submit")}
               </Button>
               <div className="flex items-center justify-between text-xs text-secondary">
                 <Button asChild variant="link" size="sm" className="h-auto px-0">

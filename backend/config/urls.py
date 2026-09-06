@@ -9,8 +9,15 @@ from drf_spectacular.views import (
 )
 
 
-def healthcheck(_request):
-    return JsonResponse({"success": True, "data": {"status": "ok"}})
+def healthcheck(request):
+    payload = {"status": "ok"}
+    if request.GET.get("db") == "1":
+        from django.db import connection
+
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+        payload["status"] = "ready"
+    return JsonResponse({"success": True, "data": payload})
 
 
 def readiness(_request):

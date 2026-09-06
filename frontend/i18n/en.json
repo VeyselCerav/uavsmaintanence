@@ -35,6 +35,7 @@
     "password": "Password",
     "forgotPassword": "Forgot password",
     "submit": "Sign in",
+    "waking": "Server is waking up, this may take a few seconds…",
     "logout": "Sign out",
     "resetHint": "No email is sent. In development a reset link is shown.",
     "resetSubmit": "Request reset",

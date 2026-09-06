@@ -2,7 +2,7 @@ name: Keep-alive
 
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 jobs:
@@ -14,5 +14,5 @@ jobs:
         env:
           HEALTH_URL: ${{ vars.BACKEND_HEALTH_URL }}
         run: |
-          url="${HEALTH_URL:-https://uavs-backend.onrender.com/health/ready/}"
+          url="${HEALTH_URL:-https://uavs-backend.onrender.com/health/?db=1}"
           curl -fsS --retry 4 --retry-all-errors --retry-delay 15 --max-time 90 "$url"

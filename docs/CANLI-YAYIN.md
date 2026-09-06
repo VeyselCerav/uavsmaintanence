@@ -87,12 +87,12 @@ Canlı ortamda demo parolaları **hemen değiştirmeniz** önerilir (Kontrol mer
 
 ## 5. Ücretsiz keep-alive (uyku modunu azaltır)
 
-Render Free ~15 dakikada uykuya yatar; ilk istek 30–60 sn sürebilir. Repodaki `.github/workflows/keep-alive.yml` her 10 dakikada `/health/ready/` adresini yoklar (Render + Neon).
+Render Free ~15 dakikada uykuya yatar; ilk istek 30–60 sn sürebilir. Repodaki `.github/workflows/keep-alive.yml` her 5 dakikada `/health/?db=1` adresini yoklar (Render + Neon). Giriş sayfası açılınca da aynı adres önceden çağrılır.
 
 - Workflow `main` dalına gittikten sonra **Actions** sekmesinde **Keep-alive** görünür.
 - İlk kez **Run workflow** ile elle çalıştırın; zamanlayıcı GitHub’da birkaç dakika gecikebilir.
-- Backend adresi farklıysa repo **Settings → Secrets and variables → Actions → Variables** içine `BACKEND_HEALTH_URL` ekleyin (`https://SIZIN-HOST.onrender.com/health/ready/`).
-- GitHub Actions kapalıysa ücretsiz [cron-job.org](https://cron-job.org) ile aynı URL’ye 10 dakikada bir GET atın.
+- Backend adresi farklıysa repo **Settings → Secrets and variables → Actions → Variables** içine `BACKEND_HEALTH_URL` ekleyin (`https://SIZIN-HOST.onrender.com/health/?db=1`).
+- GitHub Actions kapalıysa ücretsiz [cron-job.org](https://cron-job.org) ile aynı URL’ye 5 dakikada bir GET atın.
 
 ## 6. Sorun giderme
 
