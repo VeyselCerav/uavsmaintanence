@@ -15,8 +15,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN chmod +x scripts/render-start.sh
+RUN chmod +x scripts/start.sh scripts/render-start.sh
 
 EXPOSE 8000
 
-CMD ["scripts/render-start.sh"]
+CMD ["scripts/start.sh"]

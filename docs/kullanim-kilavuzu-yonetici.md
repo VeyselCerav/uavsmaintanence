@@ -195,7 +195,7 @@ Kontrol merkezi → Ayarlar → `maintenance.due_rules`. Değişiklik tüm kulla
 | Şablon bağlanmadı | Sınıf/platform/görev/yaklaşım üçlüsü için aktif şablon var mı? |
 | Vade yok | Komponent takılı mı, şablon kalemi o türe ait mi? |
 | Komponent sökülemiyor | Açık iş emrini kapatın |
-| Giriş çok yavaş | Render ücretsiz uyku; sayfayı açıp bekleyin |
+| Giriş çok yavaş | Eski Render uykusu; canlı yayın Northflank ise sayfayı yenileyin, API adresini kontrol edin |
 | Doküman inmiyor | Metadata-only demo olabilir; yeni dosya yükleyin |
 | Oturum bitti | Yeniden giriş |
 

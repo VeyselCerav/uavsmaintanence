@@ -10,9 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
-      - name: Render ve Neon uyanık tut
+      - name: Backend sağlık yoklaması
         env:
           HEALTH_URL: ${{ vars.BACKEND_HEALTH_URL }}
         run: |
-          url="${HEALTH_URL:-https://uavs-backend.onrender.com/health/?db=1}"
-          curl -fsS --retry 4 --retry-all-errors --retry-delay 15 --max-time 90 "$url"
+          if [ -z "$HEALTH_URL" ]; then
+            echo "BACKEND_HEALTH_URL yok; Northflank uyumaz, keep-alive atlandı."
+            exit 0
+          fi
+          curl -fsS --retry 4 --retry-all-errors --retry-delay 15 --max-time 90 "$HEALTH_URL"

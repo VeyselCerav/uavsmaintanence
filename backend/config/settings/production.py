@@ -16,6 +16,10 @@ _render_host = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
 if _render_host:
     ALLOWED_HOSTS.append(_render_host)
 
+# Northflank public host: p01--service--xxxx.code.run
+if "*" not in ALLOWED_HOSTS and ".code.run" not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(".code.run")
+
 _csrf_origins = os.environ.get("CSRF_TRUSTED_ORIGINS", "")
 if _csrf_origins.strip():
     CSRF_TRUSTED_ORIGINS = [

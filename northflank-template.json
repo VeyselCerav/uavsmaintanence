@@ -1,0 +1,158 @@
+{
+  "apiVersion": "v1.2",
+  "name": "İHA bakım backend",
+  "description": "Django API + PostgreSQL 18. Vercel frontend ayrı kalır.",
+  "options": {
+    "autorun": false,
+    "concurrencyPolicy": "forbid"
+  },
+  "argumentOverrides": {
+    "DJANGO_SECRET_KEY": "${fn.randomSecret(64)}"
+  },
+  "spec": {
+    "kind": "Workflow",
+    "spec": {
+      "type": "sequential",
+      "steps": [
+        {
+          "kind": "Project",
+          "ref": "project",
+          "spec": {
+            "name": "uavs-maintenance",
+            "region": "europe-west",
+            "color": "#0A5BA5",
+            "networking": {
+              "allowedIngressProjects": []
+            }
+          }
+        },
+        {
+          "kind": "Workflow",
+          "spec": {
+            "type": "sequential",
+            "context": {
+              "projectId": "${refs.project.id}"
+            },
+            "steps": [
+              {
+                "kind": "Addon",
+                "ref": "database",
+                "spec": {
+                  "name": "uavs-db",
+                  "type": "postgres",
+                  "version": "18",
+                  "tlsEnabled": true,
+                  "externalAccessEnabled": false,
+                  "pitrEnabled": false,
+                  "billing": {
+                    "replicas": 1,
+                    "storage": 4096,
+                    "storageClass": "ssd",
+                    "deploymentPlan": "nf-compute-20"
+                  }
+                }
+              },
+              {
+                "kind": "CombinedService",
+                "ref": "backend",
+                "spec": {
+                  "name": "uavs-backend",
+                  "billing": {
+                    "deploymentPlan": "nf-compute-20",
+                    "buildPlan": "nf-compute-50"
+                  },
+                  "vcsData": {
+                    "projectType": "github",
+                    "projectUrl": "https://github.com/VeyselCerav/uavsmaintanence",
+                    "projectBranch": "main"
+                  },
+                  "buildSettings": {
+                    "dockerfile": {
+                      "buildEngine": "kaniko",
+                      "useCache": true,
+                      "dockerWorkDir": "/backend",
+                      "dockerFilePath": "/backend/Dockerfile"
+                    }
+                  },
+                  "deployment": {
+                    "instances": 1,
+                    "docker": {
+                      "configType": "default"
+                    },
+                    "storage": {
+                      "ephemeralStorage": {
+                        "storageSize": 1024
+                      },
+                      "shmSize": 64
+                    }
+                  },
+                  "ports": [
+                    {
+                      "name": "p01",
+                      "internalPort": 8000,
+                      "protocol": "HTTP",
+                      "public": true,
+                      "domains": [],
+                      "disableNfDomain": false,
+                      "security": {
+                        "policies": [],
+                        "credentials": []
+                      }
+                    }
+                  ],
+                  "runtimeEnvironment": {
+                    "DJANGO_SETTINGS_MODULE": "config.settings.production",
+                    "DJANGO_SECRET_KEY": "${args.DJANGO_SECRET_KEY}",
+                    "DJANGO_ALLOWED_HOSTS": "*",
+                    "DATABASE_SSL_REQUIRE": "true",
+                    "CORS_ALLOWED_ORIGINS": "https://uavsmaintanence.vercel.app",
+                    "CSRF_TRUSTED_ORIGINS": "https://uavsmaintanence.vercel.app",
+                    "SEED_DEMO": "true",
+                    "GUNICORN_WORKERS": "1",
+                    "PORT": "8000"
+                  },
+                  "disabledCI": false
+                }
+              },
+              {
+                "kind": "SecretGroup",
+                "ref": "secrets",
+                "spec": {
+                  "name": "uavs-secrets",
+                  "type": "secret",
+                  "secretType": "environment-arguments",
+                  "priority": 10,
+                  "secrets": {
+                    "variables": {},
+                    "files": {}
+                  },
+                  "addonDependencies": [
+                    {
+                      "addonId": "${refs.database.id}",
+                      "keys": [
+                        {
+                          "keyName": "POSTGRES_URI",
+                          "aliases": ["DATABASE_URL"]
+                        }
+                      ]
+                    }
+                  ],
+                  "restrictions": {
+                    "restricted": true,
+                    "nfObjects": [
+                      {
+                        "id": "${refs.backend.id}",
+                        "type": "service"
+                      }
+                    ],
+                    "tags": []
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

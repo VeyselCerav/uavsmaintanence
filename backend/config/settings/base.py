@@ -100,6 +100,18 @@ DATABASES = {
     }
 }
 
+def _database_ssl_require(database_url: str) -> bool:
+    explicit = os.environ.get("DATABASE_SSL_REQUIRE")
+    if explicit is not None and explicit.strip() != "":
+        return explicit.strip().lower() in ("1", "true", "yes")
+    lowered = database_url.lower()
+    if "sslmode=disable" in lowered:
+        return False
+    if "sslmode=require" in lowered or "sslmode=verify" in lowered:
+        return True
+    return "neon.tech" in lowered or "neon.com" in lowered
+
+
 _database_url = os.environ.get("DATABASE_URL")
 if _database_url:
     import dj_database_url
@@ -107,7 +119,7 @@ if _database_url:
     DATABASES["default"] = dj_database_url.parse(
         _database_url,
         conn_max_age=0,
-        ssl_require=True,
+        ssl_require=_database_ssl_require(_database_url),
     )
     DATABASES["default"]["DISABLE_SERVER_SIDE_CURSORS"] = True
 
